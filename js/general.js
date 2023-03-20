@@ -1,7 +1,7 @@
 const todo = document.getElementById('todo');
 const content = document.getElementById('content');
 
-// SPA
+// SPA FIXME: 여기 좀 많이 손봐야 할 듯
 window.onload = function() {
     axios.get('./view/main.html')
     .then(function(res) {
@@ -23,12 +23,37 @@ function handleCheck() {
         if(e.target.type === 'checkbox') {
             console.log(e.target.parentElement);
             e.target.parentElement.style.display = 'none';
+        } else if (e.target !== e.currentTarget) {
+            let putTodo = e.target;
+            console.log(putTodo);
+            putTodo.addEventListener('keydown', ({ key, isComposing }) => {
+                if (isComposing) {
+                  return
+                }
+                if (key !== "Enter") {
+                  return
+                }
+                handleUpdate(putTodo.dataset.no, putTodo.value);
+            });
         }
     })
 }
 
-function handleUpdate() {
-    // const main = document.querySelector('.main');
+// FIXME: put 이벤트 추가하기
+async function handleUpdate(no, title) {
+    const url = `http://127.0.0.1:8088/todo/update.json`;
+    const headers = {
+        "Content-Type" : "application/json"
+    };
+    const body = {
+        no : no,
+        title : title
+    }
+    const { data } = await axios.put(url, body, {headers});
+    console.log(data);
+    if(data.status === 200) {
+        handleData();
+    }
 }
 
 // todo 목록 가져오기
@@ -61,6 +86,7 @@ function handleTodoIn(data, main) {
             chk.setAttribute('data-no', data.result[i]._id);
             chk.value = (data.result[i].chk);
             todos.setAttribute('value', data.result[i].title);
+            todos.setAttribute('data-no', data.result[i]._id);
             todos.classList.add('input', 'todos');
             // todos.setAttribute('readonly', true);
             div.appendChild(chk);
