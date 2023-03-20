@@ -21,8 +21,10 @@ function handleCheck() {
     const main = document.querySelector('.main');
     main.addEventListener('click', function(e) {
         if(e.target.type === 'checkbox') {
-            console.log(e.target.parentElement);
-            e.target.parentElement.style.display = 'none';
+            // console.log(e.target.parentElement);
+            let div = e.target.parentElement;
+            div.classList.add('complete');
+            handleComplete(div);
         } else if (e.target !== e.currentTarget) {
             let putTodo = e.target;
             console.log(putTodo);
@@ -39,6 +41,31 @@ function handleCheck() {
     })
 }
 
+// 완료
+function handleComplete(el) {
+    let no = el.firstChild.dataset.no;
+    handlePutCheck(no);
+    setTimeout(() => {
+        el.style.display = 'none';
+        el.classList.remove('todo-list');
+    }, 500)
+}
+
+// 완료 요청
+async function handlePutCheck(no) {
+    const url = 'http://127.0.0.1:8088/todo/complete.json';
+    const headers = {
+        "Content-Type" : "application/json"
+    };
+    const body = {
+        no : no
+    };
+    const { data } = await axios.put(url, body, {headers});
+    if(data.status === 200) {
+        console.log(data);
+    }
+}
+
 // FIXME: put 이벤트 추가하기
 async function handleUpdate(no, title) {
     const url = `http://127.0.0.1:8088/todo/update.json`;
@@ -48,7 +75,7 @@ async function handleUpdate(no, title) {
     const body = {
         no : no,
         title : title
-    }
+    };
     const { data } = await axios.put(url, body, {headers});
     console.log(data);
     if(data.status === 200) {

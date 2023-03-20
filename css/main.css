@@ -38,3 +38,18 @@
 .chk:checked {
     accent-color: #282935;
 }
+
+/* 완료시 퇴장 애니메이션 */
+.complete {
+    animation: out 0.5s ease-in-out;
+}
+@keyframes out {
+    from {
+        right : 0px;
+        opacity: 1;
+    }
+    to {
+        right: -300px;
+        opacity: 0;
+    }
+}
