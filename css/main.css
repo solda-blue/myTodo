@@ -1,6 +1,40 @@
 .main {
-    height: 900px;
+    min-height: 600px;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-h1 {
-    color: white;
+.todo-list {
+    position: relative;
+    margin: 7px;
+    animation: slide 0.3s ease-in-out;
+}
+@keyframes slide {
+    from {
+        opacity: 0;
+        left: -130px;
+    }
+    to {
+        opacity: 1;
+        left: 0px;
+    }
+}
+
+.todos {
+    margin-left: 4px;
+    height: 40px;
+    text-overflow: ellipsis;
+}
+.chk {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    left: 35px;
+    top: 3.5px;
+    opacity: 1;
+    z-index: 1;
+}
+.chk:checked {
+    accent-color: #282935;
 }
