@@ -18,6 +18,8 @@
     justify-content: center;
 }
 .input {
+    background-color: #E6E8EB;
+    color: #303133;
     justify-content: center;
     height: 50px;
     width: 550px;
@@ -34,6 +36,7 @@
 } */
 input:hover {
     opacity: 1;
+    cursor: pointer;
 }
 .material-symbols-outlined {
     position: relative;
@@ -41,4 +44,56 @@ input:hover {
     top: 10px;
     opacity: 1;
     z-index: 1;
+}
+
+.date-box {
+    display: flex;
+    justify-content: right;
+    color: white;
+    padding: 20px 5px;
+}
+
+#countBox {
+    position: relative;
+    left: 30px;
+    margin: 40px 0px 5px;
+    display: flex;
+    justify-content: center;
+    color: #C0C4CC;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.on {
+    border-bottom: 2px white solid;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-count:hover {
+    cursor: pointer;
+    color: white;
+}
+.btn-count:active {
+    position: relative;
+    top : 2px;
+}
+
+.modal {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+.todo-one {
+    position: absolute;
+    background-color: red;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 300px;
+    z-index: 10;
 }

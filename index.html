@@ -10,16 +10,31 @@
 </head>
 <body>
     <div class="container">
+        <div id="clock" class="date-box"></div>
         <div class="input-box">
                 <span class="material-symbols-outlined">edit_square</span>
                 <input id="todo" class="input" type="text"
                     placeholder="myTodo" autofocus maxlength="50" />
         </div>
+        <div id="countBox">
+            <span id="count" class="btn-count on">todo</span>
+            &nbsp;&nbsp;| &nbsp; 
+            <span id="complete" class="btn-count">completed</span>
+        </div>
         <div id="content"></div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="todo-one">
+            <p id="todoNo" style="display:none">no</p>
+            <h3 id="title">title</h3>
+            <button id="delete">삭제</button>
+        </div>
     </div>
 
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./js/index.js"></script>
     <script src="./js/general.js"></script>
 </body>
 </html>
