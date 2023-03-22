@@ -24,11 +24,33 @@
         <div id="content"></div>
     </div>
 
+    <!-- todoOne 모달 -->
     <div id="modal" class="modal">
         <div class="todo-one">
-            <p id="todoNo" style="display:none">no</p>
-            <h3 id="title">title</h3>
-            <button id="delete">삭제</button>
+            <span id="todoNo" style="display:none">no</span>
+            <div style="margin-bottom: 5px;">
+                <h3 id="title">title</h3>
+            </div>
+            <hr />
+            <div id="memo" contenteditable="true" placeholder="memo"></div>
+            <div class="detail">
+                <!-- <input type="date">
+                <input type="time" /> -->
+                <div class="important" style="display: flex;justify-content: left;">
+                    <button class="toggle-btn">
+                        우선 순위 : 
+                    </button>
+                    <ul class="selectbox-option hide">
+                        <li><button value="높음" class="option-btn">높음</button></li>
+                        <li><button value="중간" class="option-btn">중간</button></li>
+                        <li><button value="낮음" class="option-btn">낮음</button></li>
+                        <li><button value="없음" class="option-btn">없음</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="deleteBox">
+                <div id="delete">삭제</div>
+            </div>
         </div>
     </div>
 

@@ -48,11 +48,11 @@
 }
 .info > span:hover {
     cursor: pointer;
-    color: red;
+    color: #3399ff;
 }
 
 .chk:checked {
-    accent-color: #00ff00;
+    accent-color: #67C23A;
 }
 /* 완료시 퇴장 애니메이션 */
 .complete {

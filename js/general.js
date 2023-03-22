@@ -1,8 +1,15 @@
 const todo = document.getElementById('todo');
 const content = document.getElementById('content');
+
+// 모달창 
 const modal = document.getElementById('modal');
 const btnDelete = document.getElementById('delete');
 const todoNo = document.getElementById('todoNo');
+// 우선순위 관련
+const btnImportant = document.querySelector('.toggle-btn');
+const optionList = document.querySelector('.selectbox-option');
+// 매모
+const memo = document.getElementById('memo');
 
 // SPA FIXME: 여기 좀 많이 손봐야 할 듯
 window.onload = function() {
@@ -27,7 +34,7 @@ function handleCheck() {
         if(e.target.type === 'checkbox') {
             // console.log(e.target.parentElement);
             let div = e.target.parentElement;
-            div.children[1].style = 'background-color : #00ff00';
+            div.children[1].style = 'background-color : #67C23A;opacity:1;';
             div.classList.add('complete');
             handleComplete(div);
         } 
@@ -53,10 +60,6 @@ function handleCheck() {
         }
     })
 }
-
-
-
-
 
 // 완료
 function handleComplete(el) {
@@ -168,15 +171,22 @@ function handleCompleteIn(data, main) {
 const btnCount = document.getElementById('count');
 const btnComplete = document.getElementById('complete');
 btnComplete.addEventListener('click', function() {
-    handleCompleteData();
-    btnCount.classList.remove('on');
-    btnComplete.classList.add('on');
+    completeWithClass();
 });
 btnCount.addEventListener('click', function() {
+    todoWithClass();
+});
+
+function todoWithClass() {
     handleData();
     btnComplete.classList.remove('on');
     btnCount.classList.add('on');
-})
+}
+function completeWithClass() {
+    handleCompleteData();
+    btnCount.classList.remove('on');
+    btnComplete.classList.add('on');
+}
 
 // 가져온 데이터 렌더링
 function handleTodoIn(data, main) {
@@ -275,12 +285,20 @@ async function handleSelectOneTodo(no) {
         const title = document.getElementById('title');
         title.innerText = data.result.title;
         todoNo.setAttribute('data-no', data.result._id);
+        todoNo.setAttribute('data-chk', data.result.chk);
+        if(data.result.chk !== 1) {
+            memo.contentEditable = false;
+        }
+        memo.innerText = data.result.memo;
+        btnImportant.innerText = '우선 순위 : ' + data.result.important;
     }
 }
 
+// todo 삭제 이벤트
 btnDelete.addEventListener('click', async function() {
     if(confirm('삭제하시겠습니까?')) {
         let no = todoNo.dataset.no;
+        let chk = todoNo.dataset.chk;
         const url = `http://127.0.0.1:8088/todo/delete.json`;
         const body = {
             no : no
@@ -291,15 +309,82 @@ btnDelete.addEventListener('click', async function() {
 
         const { data } = await axios.post(url, body, {headers});
         if(data.status === 200) {
+            if(chk == 1) {
+                todoWithClass();
+            } else if (chk == 2) {
+                completeWithClass();
+            }
             console.log('삭제되었습니다.');
             modal.style.display = 'none';
-            handleData();
         }
     }
 })
 
+// 모달창 끄기
 modal.addEventListener('click', function(e) {
-    if(e.target === e.currentTarget) {
+    if(e.target !== e.currentTarget) {
+
+    } else {
         modal.style.display = 'none';
     }
-})
+});
+
+// 우선순위 옵션 토글
+btnImportant.addEventListener('click', function() {
+    if(todoNo.dataset.chk === "1") {
+        optionList.classList.toggle('hide');
+    }
+});
+// 우선순위 버튼 외부 영역 누르면 꺼짐
+modal.addEventListener('click', function(e) {
+    if(!e.target.classList.contains('toggle-btn')&&
+    !e.target.classList.contains('selectbox-option')) {
+        optionList.classList.add('hide');
+    }
+});
+
+// 우선순위 수정
+optionList.addEventListener('click', async function(e) {
+    if(e.target !== e.currentTarget) {
+        let important = e.target.value;
+        const url = `http://127.0.0.1:8088/todo/important.json`;
+        const body = {
+            no : todoNo.dataset.no,
+            important : important
+        };
+        const headers = {
+            "Content-Type" : "application/json"
+        };
+        const { data } = await axios.put(url, body, {headers});
+        if(data.status === 200) {
+            btnImportant.innerText = '우선 순위 : ' + important;
+        }
+    }
+});
+
+// memo.addEventListener('click', function() {
+//     if(todoNo.dataset.chk === '2') {
+//         this.contentEditable = false;
+//     } else if(todo.dataset.chk === '1') {
+//     }
+// })
+
+
+memo.addEventListener('focusout', async function(e) {
+    if(memo.innerText !== "") {
+        const memo = this.innerText;
+        console.log(memo);
+        const url = `http://127.0.0.1:8088/todo/memo.json`;
+        const body = {
+            no : todoNo.dataset.no,
+            memo : memo
+        };
+        const headers = {
+            "Content-Type" : "application/json"
+        };
+        const { data } = await axios.put(url, body, {headers});
+        if(data.status === 200) {
+            this.innerText = memo;
+        }
+    }
+});
