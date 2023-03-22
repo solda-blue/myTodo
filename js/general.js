@@ -108,7 +108,7 @@ async function handleUpdate(no, title) {
 // todo 목록 가져오기
 async function handleData(page) {
     const main = document.querySelector('.main');
-    const url = `http://127.0.0.1:8088/todo/select.json?text=&page=${page}`;
+    const url = `http://127.0.0.1:8088/todo/select.json?text=&page=${page}&select=1`;
     const headers = {
         "Content-Type" : "application/json"
     }
@@ -143,6 +143,17 @@ function handleCompleteIn(data, main) {
             let todos = document.createElement('input');
             let chk = document.createElement('input');
             let info = document.createElement('span');
+            let important = document.createElement('span');
+            important.classList.add('important');
+            if(data.result[i].important === '높음') {
+                important.innerText = '!!!';
+            } else if(data.result[i].important === '중간') {
+                important.innerText = ' !!';
+            } else if(data.result[i].important === '낮음') {
+                important.innerText = '  !';
+            } else {
+                important.innerText = '';
+            }
             div.classList.add('todo-list');
             chk.setAttribute('type', 'checkbox');
             chk.classList.add('chk');
@@ -160,6 +171,7 @@ function handleCompleteIn(data, main) {
             let infoDiv = document.createElement('div');
             infoDiv.appendChild(info);
             infoDiv.classList.add('info');
+            div.appendChild(important);
             div.appendChild(chk);
             div.appendChild(todos);
             div.appendChild(infoDiv);
@@ -168,6 +180,7 @@ function handleCompleteIn(data, main) {
     }
 }
 
+// todo 목록 / 완료된 목록
 const btnCount = document.getElementById('count');
 const btnComplete = document.getElementById('complete');
 btnComplete.addEventListener('click', function() {
@@ -200,6 +213,18 @@ function handleTodoIn(data, main) {
             let todos = document.createElement('input');
             let chk = document.createElement('input');
             let info = document.createElement('span');
+            let important = document.createElement('span');
+            important.classList.add('important');
+            important.setAttribute('data-no', data.result[i]._id);
+            if(data.result[i].important === '높음') {
+                important.innerText = '!!!';
+            } else if(data.result[i].important === '중간') {
+                important.innerText = ' !!';
+            } else if(data.result[i].important === '낮음') {
+                important.innerText = '  !';
+            } else {
+                important.innerText = '';
+            }
             div.classList.add('todo-list');
             chk.setAttribute('type', 'checkbox');
             chk.classList.add('chk');
@@ -214,6 +239,7 @@ function handleTodoIn(data, main) {
             let infoDiv = document.createElement('div');
             infoDiv.appendChild(info);
             infoDiv.classList.add('info');
+            div.appendChild(important);
             div.appendChild(chk);
             div.appendChild(todos);
             div.appendChild(infoDiv);
@@ -326,6 +352,7 @@ modal.addEventListener('click', function(e) {
 
     } else {
         modal.style.display = 'none';
+
     }
 });
 
@@ -358,6 +385,17 @@ optionList.addEventListener('click', async function(e) {
         const { data } = await axios.put(url, body, {headers});
         if(data.status === 200) {
             btnImportant.innerText = '우선 순위 : ' + important;
+            // querySelector 로도 data- 에 접근할 수 있다
+            let important1 = document.querySelector(`.important[data-no='${todoNo.dataset.no}']`);
+            if(important === '높음') {
+                important1.innerText = '!!!';
+            } else if(important === '중간') {
+                important1.innerText = ' !!';
+            } else if(important === '낮음') {
+                important1.innerText = '  !';
+            } else {
+                important.innerText = '   ';
+            }
         }
     }
 });
