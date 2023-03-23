@@ -4,6 +4,8 @@ const btnSort = document.getElementById('countSort');
 const listSort = document.querySelector('.list-sort');
 const modalTransparent = document.querySelector('.modal-transparent');
 
+let select = 1;
+
 handleDate();
 setInterval(handleDate, 1000);
 
@@ -39,7 +41,7 @@ function handleDate() {
 btnSort.addEventListener('click', function() {
     listSort.style.display = 'block';
     modalTransparent.style.display = 'block';
-    this.style = `background-color: rgba(0, 0, 0, 0.25);color: white;`;
+    this.classList.add('options-add');
     modalTransparent.addEventListener('click', handleModal, {once :true});
 });
 // 모달창 닫기
@@ -47,6 +49,7 @@ function handleModal(e) {
     console.log(e.target);
     this.style.display = 'none';
     listSort.style.display = 'none';
+    btnSort.classList.remove('options-add');
 };
 // 정렬 이벤트
 listSort.addEventListener('click', function(e) {
@@ -54,6 +57,11 @@ listSort.addEventListener('click', function(e) {
         console.log(e.target);
         this.style.display = 'none';
         modalTransparent.style.display = 'none';
+        btnSort.classList.remove('options-add');
+        let regChar = e.target.innerText;
+        btnSort.firstElementChild.innerText = '정렬 : ' + regChar;
+        select = e.target.dataset.sort;
+        handleData(select);
         // 이벤트 삭제 TODO: 이벤트 공부 많이 해야겠다
         modalTransparent.removeEventListener('click', handleModal);
     }

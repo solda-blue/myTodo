@@ -18,7 +18,7 @@ window.onload = function() {
         console.log('Main Loaded');
         content.innerHTML = res.request.responseText;
         const main = document.querySelector('.main');
-        handleData();
+        handleData(select);
         handleCount();
         handleCheck();
     })
@@ -101,14 +101,14 @@ async function handleUpdate(no, title) {
     const { data } = await axios.put(url, body, {headers});
     console.log(data);
     if(data.status === 200) {
-        handleData();
+        handleData(select);
     }
 }
 
 // todo 목록 가져오기
-async function handleData(page) {
+async function handleData(select, page) {
     const main = document.querySelector('.main');
-    const url = `http://127.0.0.1:8088/todo/select.json?text=&page=${page}&select=1`;
+    const url = `http://127.0.0.1:8088/todo/select.json?text=&page=${page}&select=${select}`;
     const headers = {
         "Content-Type" : "application/json"
     }
@@ -190,7 +190,7 @@ btnCount.addEventListener('click', function() {
     todoWithClass();
 });
 function todoWithClass() {
-    handleData();
+    handleData(select);
     btnComplete.classList.remove('on');
     btnCount.classList.add('on');
 }
@@ -290,7 +290,7 @@ const handleInsert = async () => {
         const { data } = await axios.post(url, body, {headers});
         if(data.status === 200) {
             console.log(data.result);
-            handleData();
+            handleData(select);
             handleCount();
             todo.value = "";
         };
