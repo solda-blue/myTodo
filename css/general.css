@@ -14,7 +14,7 @@
 .input-box {
     width: 100%;
     display: flex;
-    padding-top: 150px;
+    padding-top: 50px;
     justify-content: center;
 }
 #todo:hover {
@@ -23,6 +23,9 @@
 #todo:focus {
     opacity: 1;
 }
+/* #todo {
+    width: 500px;
+} */
 .input {
     background-color: #E6E8EB;
     color: #303133;
@@ -112,7 +115,7 @@
 .list-sort {
     position: absolute;
     top: 24px;
-    width: 100px;
+    width: 78.5px;
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.25);
     display: none;

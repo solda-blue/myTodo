@@ -99,8 +99,8 @@ async function handleUpdate(no, title) {
         title : title
     };
     const { data } = await axios.put(url, body, {headers});
-    console.log(data);
     if(data.status === 200) {
+        console.log(data);
         handleData(select);
     }
 }
@@ -193,11 +193,15 @@ function todoWithClass() {
     handleData(select);
     btnComplete.classList.remove('on');
     btnCount.classList.add('on');
+    btnCompleteDelete.classList.remove('active');
+    btnSort.classList.add('active');
 }
 function completeWithClass() {
     handleCompleteData();
     btnCount.classList.remove('on');
     btnComplete.classList.add('on');
+    btnSort.classList.remove('active');
+    btnCompleteDelete.classList.add('active');
 }
 
 // 가져온 데이터 렌더링
@@ -402,6 +406,7 @@ optionList.addEventListener('click', async function(e) {
     }
 });
 
+// 메모 수정
 memo.addEventListener('focusout', async function(e) {
     if(memo.innerText !== "") {
         const memo = this.innerText;

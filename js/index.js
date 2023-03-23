@@ -2,6 +2,7 @@ const clock = document.getElementById('clock');
 const week = ['일', '월', '화', '수', '목', '금', '토'];
 const btnSort = document.getElementById('countSort');
 const listSort = document.querySelector('.list-sort');
+const btnCompleteDelete = document.getElementById('completeDelete');
 const modalTransparent = document.querySelector('.modal-transparent');
 
 let select = 1;
@@ -66,3 +67,20 @@ listSort.addEventListener('click', function(e) {
         modalTransparent.removeEventListener('click', handleModal);
     }
 });
+
+// 완료 항목 삭제
+btnCompleteDelete.addEventListener('click', async function() {
+    if(confirm('삭제하시겠습니까?')) {
+        const url = `http://127.0.0.1:8088/todo/deleteall.json`;
+        const body = {};
+        const headers = {
+            "Content-Type" : "application/json"
+        };
+        const { data } = await axios.post(url, body, {headers});
+        if(data.status === 200) {
+            alert('삭제되었습니다.');
+            handleCompleteData();
+            handleCount();
+        }
+    }
+})
