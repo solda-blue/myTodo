@@ -145,11 +145,11 @@ function handleCompleteIn(data, main) {
             let info = document.createElement('span');
             let important = document.createElement('span');
             important.classList.add('important');
-            if(data.result[i].important === '높음') {
+            if(data.result[i].important == '3') {
                 important.innerText = '!!!';
-            } else if(data.result[i].important === '중간') {
+            } else if(data.result[i].important == '2') {
                 important.innerText = ' !!';
-            } else if(data.result[i].important === '낮음') {
+            } else if(data.result[i].important == '1') {
                 important.innerText = '  !';
             } else {
                 important.innerText = '';
@@ -189,7 +189,6 @@ btnComplete.addEventListener('click', function() {
 btnCount.addEventListener('click', function() {
     todoWithClass();
 });
-
 function todoWithClass() {
     handleData();
     btnComplete.classList.remove('on');
@@ -216,14 +215,14 @@ function handleTodoIn(data, main) {
             let important = document.createElement('span');
             important.classList.add('important');
             important.setAttribute('data-no', data.result[i]._id);
-            if(data.result[i].important === '높음') {
+            if(data.result[i].important == '3') {
                 important.innerText = '!!!';
-            } else if(data.result[i].important === '중간') {
+            } else if(data.result[i].important == '2') {
                 important.innerText = ' !!';
-            } else if(data.result[i].important === '낮음') {
+            } else if(data.result[i].important == '1') {
                 important.innerText = '  !';
             } else {
-                important.innerText = '';
+                important.innerText = '   ';
             }
             div.classList.add('todo-list');
             chk.setAttribute('type', 'checkbox');
@@ -280,7 +279,7 @@ todo.addEventListener('focusout', () => {
     todo.value = "";
 });
 
-// todo request
+// todo insert request
 const handleInsert = async () => {
     if((todo.value.trim() !== "")) {
         const url = 'http://127.0.0.1:8088/todo/insert.json';
@@ -316,7 +315,8 @@ async function handleSelectOneTodo(no) {
             memo.contentEditable = false;
         }
         memo.innerText = data.result.memo;
-        btnImportant.innerText = '우선 순위 : ' + data.result.important;
+        let arrImportant = ['없음', '낮음', '중간', '높음'];
+        btnImportant.innerText = '우선 순위 : ' + arrImportant[data.result.important];
     }
 }
 
@@ -374,6 +374,7 @@ modal.addEventListener('click', function(e) {
 optionList.addEventListener('click', async function(e) {
     if(e.target !== e.currentTarget) {
         let important = e.target.value;
+        console.log(important);
         const url = `http://127.0.0.1:8088/todo/important.json`;
         const body = {
             no : todoNo.dataset.no,
@@ -384,29 +385,22 @@ optionList.addEventListener('click', async function(e) {
         };
         const { data } = await axios.put(url, body, {headers});
         if(data.status === 200) {
-            btnImportant.innerText = '우선 순위 : ' + important;
+            let arrImportant = ['없음', '낮음', '중간', '높음'];
+            btnImportant.innerText = '우선 순위 : ' + arrImportant[important];
             // querySelector 로도 data- 에 접근할 수 있다
             let important1 = document.querySelector(`.important[data-no='${todoNo.dataset.no}']`);
-            if(important === '높음') {
+            if(important == '3') {
                 important1.innerText = '!!!';
-            } else if(important === '중간') {
+            } else if(important == '2') {
                 important1.innerText = ' !!';
-            } else if(important === '낮음') {
+            } else if(important == '1') {
                 important1.innerText = '  !';
             } else {
-                important.innerText = '   ';
+                important1.innerText = " ";
             }
         }
     }
 });
-
-// memo.addEventListener('click', function() {
-//     if(todoNo.dataset.chk === '2') {
-//         this.contentEditable = false;
-//     } else if(todo.dataset.chk === '1') {
-//     }
-// })
-
 
 memo.addEventListener('focusout', async function(e) {
     if(memo.innerText !== "") {

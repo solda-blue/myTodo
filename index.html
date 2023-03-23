@@ -17,10 +17,29 @@
                     placeholder="myTodo" autofocus maxlength="50" />
         </div>
         <div id="countBox">
-            <span id="count" class="btn-count on">todo</span>
+            <span id="count" class="btn-count">todo</span>
             &nbsp;&nbsp;| &nbsp; 
             <span id="complete" class="btn-count">completed</span>
         </div>
+        <div id="option-box">
+            <div id="countSort" class="options active">
+                <span>정렬 : </span>
+                <span class="material-symbols-outlined icon-arrow-drop-down">
+                    arrow_drop_down
+                </span>
+            </div>
+            <div class="list-sort">
+                <p data-sort="1">등록순</p>
+                <p data-sort="2">중요도순</p>
+            </div>
+            <div id="completeDelete" class="options">
+                <span>완료항목 삭제</span>
+                <span class="material-symbols-outlined icon-remove-done">
+                    remove_done
+                </span>
+            </div>
+        </div>
+
         <div id="content"></div>
     </div>
 
@@ -41,10 +60,10 @@
                         우선 순위 : 
                     </button>
                     <ul class="selectbox-option hide">
-                        <li><button value="높음" class="option-btn">높음</button></li>
-                        <li><button value="중간" class="option-btn">중간</button></li>
-                        <li><button value="낮음" class="option-btn">낮음</button></li>
-                        <li><button value="없음" class="option-btn">없음</button></li>
+                        <li><button value="3" class="option-btn">높음</button></li>
+                        <li><button value="2" class="option-btn">중간</button></li>
+                        <li><button value="1" class="option-btn">낮음</button></li>
+                        <li><button value="0" class="option-btn">없음</button></li>
                     </ul>
                 </div>
             </div>
@@ -54,6 +73,7 @@
         </div>
     </div>
 
+    <div class="modal-transparent"></div>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./js/index.js"></script>

@@ -1,9 +1,13 @@
 const clock = document.getElementById('clock');
-const week = ['일', '월', '화', '수', '목', '금', '토']
+const week = ['일', '월', '화', '수', '목', '금', '토'];
+const btnSort = document.getElementById('countSort');
+const listSort = document.querySelector('.list-sort');
+const modalTransparent = document.querySelector('.modal-transparent');
 
 handleDate();
 setInterval(handleDate, 1000);
 
+// 시계
 function handleDate() {
     clock.innerHTML = "";
     let now = new Date();
@@ -28,5 +32,29 @@ function handleDate() {
     showTime.style = 'margin-left:5px';
     showTime.innerText = `${hours}:${minutes}:${seconds}`;
     clock.appendChild(showTime);
-}
+};
 
+// FIXME: 이거 나중에 공부하고 바꿔야 할 듯
+// 정렬 버튼 => 모달창
+btnSort.addEventListener('click', function() {
+    listSort.style.display = 'block';
+    modalTransparent.style.display = 'block';
+    this.style = `background-color: rgba(0, 0, 0, 0.25);color: white;`;
+    modalTransparent.addEventListener('click', handleModal, {once :true});
+});
+// 모달창 닫기
+function handleModal(e) {
+    console.log(e.target);
+    this.style.display = 'none';
+    listSort.style.display = 'none';
+};
+// 정렬 이벤트
+listSort.addEventListener('click', function(e) {
+    if(e.target !== e.currentTarget) {
+        console.log(e.target);
+        this.style.display = 'none';
+        modalTransparent.style.display = 'none';
+        // 이벤트 삭제 TODO: 이벤트 공부 많이 해야겠다
+        modalTransparent.removeEventListener('click', handleModal);
+    }
+});
