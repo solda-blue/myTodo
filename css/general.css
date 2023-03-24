@@ -276,34 +276,32 @@
 .noti-box {
     position: absolute;
     width: 100%;
-    top: -40px;
-    left: 0;
+    top: -50px;
+    left: 20px;
     display: flex;
     justify-content: center;
     animation: Noti 3s ease-in-out;
 }
 .noti {
-    /* background-color: red;
-    color: white; */
     background-color: white;
     padding: 5px 10px;
-    position: relative;
     border-radius: 5px;
-    top: 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.25);
 }
-
 /* 들어갔다 나오는 애니메이션 */
 @keyframes Noti {
     0% {
-        /* transform: translateY(0); */
+
     }
     15% {
-        transform: translateY(50px);
+        transform: translateY(60px);
     }
     85% {
-        transform: translateY(50px);
+        transform: translateY(60px);
     }
     100% {
-        /* transform: translateY(0); */
+
     }
 };
