@@ -1,6 +1,9 @@
 const todo = document.getElementById('todo');
 const content = document.getElementById('content');
 
+// todo & 완료 버튼
+const btnCount = document.getElementById('count');
+const btnComplete = document.getElementById('complete');
 // 모달창 
 const modal = document.getElementById('modal');
 const btnDelete = document.getElementById('delete');
@@ -34,7 +37,7 @@ function handleCheck() {
         if(e.target.type === 'checkbox') {
             // console.log(e.target.parentElement);
             let div = e.target.parentElement;
-            div.children[1].style = 'background-color : #67C23A;opacity:1;';
+            div.children[2].style = 'background-color : #67C23A;opacity:1;';
             div.classList.add('complete');
             handleComplete(div);
         } 
@@ -181,27 +184,50 @@ function handleCompleteIn(data, main) {
 }
 
 // todo 목록 / 완료된 목록
-const btnCount = document.getElementById('count');
-const btnComplete = document.getElementById('complete');
-btnComplete.addEventListener('click', function() {
-    completeWithClass();
-});
-btnCount.addEventListener('click', function() {
-    todoWithClass();
-});
+
+btnComplete.addEventListener('click', completeWithClass);
+btnCount.addEventListener('click', todoWithClass);
+
 function todoWithClass() {
+    btnComplete.removeEventListener('click', completeWithClass);
+    btnCount.removeEventListener('click', todoWithClass);
     handleData(select);
     btnComplete.classList.remove('on');
     btnCount.classList.add('on');
     btnCompleteDelete.classList.remove('active');
     btnSort.classList.add('active');
-}
+
+    // 렌더링 되야하는 list 개수 카운팅해서 애니메이션 시간 계산
+    let count = document.getElementById('count').firstElementChild;
+    let num = Number(count.dataset.count);
+    if(num > 10) {
+        num = 10;
+    }
+    // 위의 계산한 시간 동안 버튼 이벤트 막아두기
+    setTimeout(addEvent, (num * 80) + 300);
+};
 function completeWithClass() {
+    btnCount.removeEventListener('click', todoWithClass);
+    btnComplete.removeEventListener('click', completeWithClass);
     handleCompleteData();
     btnCount.classList.remove('on');
     btnComplete.classList.add('on');
     btnSort.classList.remove('active');
     btnCompleteDelete.classList.add('active');
+
+    // 렌더링 되야하는 list 개수 카운팅해서 애니메이션 시간 계산
+    let complete = document.getElementById('complete').firstElementChild;
+    let num = Number(complete.dataset.count);
+    if(num > 10) {
+        num = 10;
+    }
+    // 위의 계산한 시간 동안 버튼 이벤트 막아두기
+    setTimeout(addEvent, (num * 80) + 300);
+};
+// 이렇게 따로 함수로 만들어서 setTimeout에 넣어야 작동하네
+function addEvent() {
+    btnCount.addEventListener('click', todoWithClass)
+    btnComplete.addEventListener('click', completeWithClass)
 }
 
 // 가져온 데이터 렌더링
@@ -262,8 +288,9 @@ async function handleCount() {
     if(data.status === 200) {
         const count = document.getElementById('count');
         const complete = document.getElementById('complete');
-        count.innerHTML = `todo : ${data.todo}`;
-        complete.innerHTML = `completed : ${data.completed}`;
+        count.innerHTML = `<span data-count=${data.todo}>todo : ${data.todo}</span>`;
+        complete.innerHTML = `<span data-count=${data.completed}>
+                                completed : ${data.completed}</span>`;
     }
 }
 

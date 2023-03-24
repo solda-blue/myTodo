@@ -9,7 +9,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     /* height: 900px; */
-    padding-right: 20px;
+    min-width: 720px;
 }
 .input-box {
     width: 100%;
@@ -31,7 +31,7 @@
     color: #303133;
     justify-content: center;
     height: 50px;
-    width: 550px;
+    width: 500px;
     padding-left: 45px;
     border: 0;
     outline: none;
@@ -53,7 +53,7 @@
     display: flex;
     justify-content: right;
     color: white;
-    padding: 20px 5px;
+    padding: 20px;
     text-shadow: 0px 1px 1px black;
 }
 
@@ -86,16 +86,16 @@
 #option-box {
     display: flex;
     margin: 0 auto;
-    width: 620px;
+    margin-bottom: 5px;
+    width: 570px;
     justify-content: right;
     color: #C0C4CC;
     position: relative;
 }
 .options {
     display: none;
-    /* border: 2px white solid; */
     border-radius: 4px;
-    padding: 0 10px;
+    padding: 3px 5px 5px 10px;
 }
 .options:hover {
     background-color: rgba(0, 0, 0, 0.25);
@@ -114,10 +114,11 @@
 }
 .list-sort {
     position: absolute;
-    top: 24px;
-    width: 78.5px;
+    top: 33px;
+    width: 73.5px;
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.25);
+    color: white;
     display: none;
     z-index: 13;
 }
@@ -127,7 +128,7 @@
 .list-sort p:hover {
     cursor: pointer;
     border-radius: 4px;
-    background-color: red;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 .icon-remove-done {
     font-size: 18px;
@@ -260,6 +261,7 @@
     display: none;
 }
 
+/* select 같은 모달용 */
 .modal-transparent {
     width: 100%;
     height: 100%;
@@ -269,3 +271,39 @@
     top: 0;
     z-index: 5;
 }
+
+/* 노티박스 */
+.noti-box {
+    position: absolute;
+    width: 100%;
+    top: -40px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    animation: Noti 3s ease-in-out;
+}
+.noti {
+    /* background-color: red;
+    color: white; */
+    background-color: white;
+    padding: 5px 10px;
+    position: relative;
+    border-radius: 5px;
+    top: 0;
+}
+
+/* 들어갔다 나오는 애니메이션 */
+@keyframes Noti {
+    0% {
+        /* transform: translateY(0); */
+    }
+    15% {
+        transform: translateY(50px);
+    }
+    85% {
+        transform: translateY(50px);
+    }
+    100% {
+        /* transform: translateY(0); */
+    }
+};

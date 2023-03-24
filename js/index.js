@@ -70,17 +70,39 @@ listSort.addEventListener('click', function(e) {
 
 // 완료 항목 삭제
 btnCompleteDelete.addEventListener('click', async function() {
-    if(confirm('삭제하시겠습니까?')) {
-        const url = `http://127.0.0.1:8088/todo/deleteall.json`;
-        const body = {};
-        const headers = {
-            "Content-Type" : "application/json"
-        };
-        const { data } = await axios.post(url, body, {headers});
-        if(data.status === 200) {
-            alert('삭제되었습니다.');
-            handleCompleteData();
-            handleCount();
-        }
-    }
-})
+    // if(document.querySelector('.main').childElementCount > 0) {
+    //     if(confirm('삭제하시겠습니까?')) {
+    //         const url = `http://127.0.0.1:8088/todo/deleteall.json`;
+    //         const body = {};
+    //         const headers = {
+    //             "Content-Type" : "application/json"
+    //         };
+    //         const { data } = await axios.post(url, body, {headers});
+    //         if(data.status === 200) {
+    //             handleCompleteData();
+    //             handleCount();
+    //             handleNoti('삭제되었습니다.');
+    //         }
+    //     }
+    // } else {
+    //     console.log('항목 없음');
+    //     return
+    // };
+    handleNoti('noti test');
+});
+
+// 삭제 알림
+function handleNoti(text) {
+    let notiBox = document.createElement('div');
+    let noti = document.createElement('div');
+    noti.classList.add('noti');
+    notiBox.appendChild(noti);
+    noti.innerText = text;
+    document.body.appendChild(notiBox);
+    notiBox.classList.add('noti-box');
+    setTimeout(deleteNoti, 4000, notiBox);
+}
+// 생성한 notiBox 삭제
+function deleteNoti(el) {
+    el.remove();
+}
