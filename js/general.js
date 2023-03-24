@@ -6,6 +6,7 @@ const btnCount = document.getElementById('count');
 const btnComplete = document.getElementById('complete');
 // 모달창 
 const modal = document.getElementById('modal');
+const todoOne = document.querySelector('.todo-one');
 const btnDelete = document.getElementById('delete');
 const todoNo = document.getElementById('todoNo');
 // 우선순위 관련
@@ -30,15 +31,14 @@ window.onload = function() {
     })
 };
 
-// 완료 
+// input 이벤트 모음
 function handleCheck() {
     const main = document.querySelector('.main');
     main.addEventListener('click', function(e) {
+        // 체크 이벤트
         if(e.target.type === 'checkbox') {
             // console.log(e.target.parentElement);
             let div = e.target.parentElement;
-            div.children[2].style = 'background-color : #67C23A;opacity:1;';
-            div.classList.add('complete');
             handleComplete(div);
         } 
         // info 버튼 이벤트
@@ -47,7 +47,7 @@ function handleCheck() {
             let no = e.target.dataset.no;
             handleSelectOneTodo(no);
         }
-        // 남은것들
+        // title 수정 이벤트
         else if(e.target !== e.currentTarget) {
             let putTodo = e.target;
             console.log(putTodo);
@@ -64,15 +64,20 @@ function handleCheck() {
     })
 }
 
-// 완료
+// 완료 에니메이션 위주
 function handleComplete(el) {
     let no = el.firstChild.dataset.no;
+    // 완료 요청 보내기
     handlePutCheck(no);
+    // css 애니메이션이랑 시간을 맞춰야 함
+    // el.children[2].classList.add('complete-color');
+    el.classList.add('complete');
     setTimeout(() => {
         el.style.display = 'none';
         el.classList.remove('todo-list');
         el.classList.remove('complete');
-    }, 500);
+        // el.children[2].classList.remove('complete-color');
+    }, 1500);
 }
 
 // 완료 요청
@@ -337,14 +342,15 @@ async function handleSelectOneTodo(no) {
     const { data } = await axios.get(url, {headers});
     if(data.status === 200) {
         console.log(data);
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
+        todoOne.style.animation = 'scaleup 0.3s';
         const title = document.getElementById('title');
         title.innerText = data.result.title;
         todoNo.setAttribute('data-no', data.result._id);
         todoNo.setAttribute('data-chk', data.result.chk);
         if(data.result.chk !== 1) {
             memo.contentEditable = false;
-        }
+        };
         memo.innerText = data.result.memo;
         let arrImportant = ['없음', '낮음', '중간', '높음'];
         btnImportant.innerText = '우선 순위 : ' + arrImportant[data.result.important];
@@ -353,7 +359,8 @@ async function handleSelectOneTodo(no) {
 
 // todo 삭제 이벤트
 btnDelete.addEventListener('click', async function() {
-    if(confirm('삭제하시겠습니까?')) {
+    // TODO: dialogue 창도 되면 만들자
+    // if(confirm('삭제하시겠습니까?')) {
         let no = todoNo.dataset.no;
         let chk = todoNo.dataset.chk;
         const url = `http://127.0.0.1:8088/todo/delete.json`;
@@ -363,7 +370,6 @@ btnDelete.addEventListener('click', async function() {
         const headers = {
             "Content-Type" : "application/json"
         };
-
         const { data } = await axios.post(url, body, {headers});
         if(data.status === 200) {
             if(chk == 1) {
@@ -371,21 +377,26 @@ btnDelete.addEventListener('click', async function() {
             } else if (chk == 2) {
                 completeWithClass();
             }
-            console.log('삭제되었습니다.');
-            modal.style.display = 'none';
+            handleNoti('삭제되었습니다')
+            closeModal();
         }
-    }
+    // }
 })
 
 // 모달창 끄기
 modal.addEventListener('click', function(e) {
     if(e.target !== e.currentTarget) {
-
+        
     } else {
-        modal.style.display = 'none';
-
+        closeModal();
     }
 });
+
+// setTime으로 모달 닫기 animation용
+function closeModal() {
+    todoOne.style.animation = 'scaledown 0.3s';
+    setTimeout(() => {modal.style.display = 'none';}, 200);
+}
 
 // 우선순위 옵션 토글
 btnImportant.addEventListener('click', function() {

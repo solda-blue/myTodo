@@ -45,7 +45,7 @@ btnSort.addEventListener('click', function() {
     this.classList.add('options-add');
     modalTransparent.addEventListener('click', handleModal, {once :true});
 });
-// 모달창 닫기
+// 정렬 모달창 모달창 닫기
 function handleModal(e) {
     console.log(e.target);
     this.style.display = 'none';
@@ -104,7 +104,7 @@ function handleNoti(text, type) {
     let message = document.createElement('span');
     let noti = document.createElement('div');
     icon.setAttribute('src',types[type].icon);
-    message.style = `padding-left : 10px; font-size : 1.05rem;`;
+    message.style = `padding-left : 10px;`;
     message.innerText = text;
     noti.appendChild(icon);
     noti.appendChild(message);
