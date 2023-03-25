@@ -54,13 +54,28 @@ body {
     z-index: 1;
 }
 
+/* 세팅버튼 */
+.settings-box {
+    color: white;
+    padding-top: 8px;
+}
+.btn-settings {
+    font-size: 20px;
+    /* text-shadow: 1px 2px 3px black; */
+}
+.btn-settings:hover {
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 1px 2px 3px black;
+}
+
 /* 시계 */
 .date-box {
     display: flex;
     justify-content: right;
     color: white;
     padding: 20px;
-    text-shadow: 0px 1px 1px black;
+    text-shadow: 1px 2px 3px black;
 }
 
 /* toto & complete */

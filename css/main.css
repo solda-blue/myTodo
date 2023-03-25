@@ -50,20 +50,24 @@
     opacity: 1;
     z-index: 1;
 }
-.info {
+
+/* 해당 todo박스호버시 아이콘이 보임 */
+.todo-list:hover .info {
     position: absolute;
-    left: 505px;
-    bottom: 13px;
-    /* padding-right: 30px; */
-    z-index: 2;
-    color: white;
-}
-.info > span {
+    display: block;
+    /* 흰색 필터 */
+    /* filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(306deg) brightness(105%) contrast(105%); */
+    /* 파란색 필터 #3399ff*/
+    filter: invert(48%) sepia(35%) saturate(2946%) hue-rotate(192deg) brightness(103%) contrast(102%);
+    left: 535px;
+    font-size: 24px;
     z-index: 5;
 }
-.info > span:hover {
+.info {
+    display: none;
+}
+.todo-list:hover .info:hover {
     cursor: pointer;
-    color: #3399ff;
 }
 
 .chk:checked {

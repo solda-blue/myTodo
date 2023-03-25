@@ -42,7 +42,7 @@ function handleCheck() {
             handleComplete(div);
         } 
         // info 버튼 이벤트
-        else if(e.target.className === 'material-symbols-outlined') {
+        else if(e.target.className === 'info') {
             // 여기에 함수 호출하면 될 듯?
             let no = e.target.dataset.no;
             handleSelectOneTodo(no);
@@ -118,87 +118,88 @@ async function handleUpdate(no, title) {
     const { data } = await axios.put(url, body, {headers});
     if(data.status === 200) {
         // handleData(select);
+        handleNoti('수정되었습니다');
     }
     console.log(data);
 }
 
 // todo 목록 가져오기
 async function handleData(select, page) {
-    const main = document.querySelector('.main');
     const url = `http://127.0.0.1:8088/todo/select.json?text=&page=${page}&select=${select}`;
     const headers = {
         "Content-Type" : "application/json"
     }
     const { data } = await axios.get(url, {headers});
     if(data.status === 200) {
-        handleTodoIn(data, main);
+        handleTodoIn(data);
     }
 }
 
 // completed 목록 가져오기
 async function handleCompleteData(page) {
-    const main = document.querySelector('.main');
     const url = `http://127.0.0.1:8088/todo/selectcomplete.json?page=${page}`;
     const headers = {
         "Content-Type" : "application/json"
     };
     const { data } = await axios.get(url, {headers});
     if(data.status === 200) {
-        // handleCompleteIn(data, main);
-        handleTodoIn(data, main, 'completed')
+        handleTodoIn(data);
     }
 }
 
 // 가져온 데이터 렌더링
-function handleTodoIn(data, main, state) {
+function handleTodoIn(data) {
+    const main = document.getElementById('main');
     main.innerHTML = "";
     console.log(data);
     let delay = 0;
     for(let i = 0; i < data.result.length; i++) {
         delay += 80;
         setTimeout(async () => {
-            let div = document.createElement('div');
-            let todos = document.createElement('input');
-            let chk = document.createElement('input');
-            let info = document.createElement('span');
-            let important = document.createElement('span');
-            important.classList.add('important');
-            important.setAttribute('data-no', data.result[i]._id);
-            if(data.result[i].important == '3') {
-                important.innerText = '!!!';
-            } else if(data.result[i].important == '2') {
-                important.innerText = ' !!';
-            } else if(data.result[i].important == '1') {
-                important.innerText = '  !';
-            } else {
-                important.innerText = '   ';
+            let frame = makeTodoFrame();
+            for(let j = 0; j < 4; j++) {
+                frame.children[j].setAttribute('data-no', data.result[i]._id);
+            };
+            frame.children[2].setAttribute('value', data.result[i].title);
+            // switch 문으로 중요도 확인해서 빨리 추가
+            let important = frame.children[1];
+            switch(data.result[i].important) {
+                case '3' : important.innerText = '!!!'; break;
+                case '2' : important.innerText = '!! '; break;
+                case '1' : important.innerText = '!  '; break;
+                default : important.innerText = '  ';
             }
-            div.classList.add('todo-list');
-            chk.setAttribute('type', 'checkbox');
-            chk.classList.add('chk');
-            chk.setAttribute('data-no', data.result[i]._id);
-            chk.value = (data.result[i].chk);
-            todos.setAttribute('value', data.result[i].title);
-            todos.setAttribute('data-no', data.result[i]._id);
-            todos.classList.add('input', 'todos');
-            info.classList.add('material-symbols-outlined');
-            info.setAttribute('data-no', data.result[i]._id);
-            info.innerText = 'info';
-            let infoDiv = document.createElement('div');
-            infoDiv.appendChild(info);
-            infoDiv.classList.add('info');
-            if(state === 'completed') {
-                todos.setAttribute('readonly', true);
-                chk.setAttribute('checked', true);
-                chk.setAttribute('disabled', true);
+            if(data.result[i].chk === 2) {
+                frame.children[0].setAttribute('checked', true);
+                frame.children[0].setAttribute('disabled', true);
+                frame.children[2].setAttribute('readonly', true);
             }
-            div.appendChild(important);
-            div.appendChild(chk);
-            div.appendChild(todos);
-            div.appendChild(infoDiv);
-            main.appendChild(div);
+            main.appendChild(frame);
         }, delay);
     }
+};
+
+function makeTodoFrame() {
+    // 태그 생성
+    let div = document.createElement('div');
+    let chk = document.createElement('input');
+    let important = document.createElement('span');
+    let todos = document.createElement('input');
+    let info = document.createElement('img');
+    // 태그 style
+    div.classList.add('todo-list');
+    chk.setAttribute('type', 'checkbox');
+    chk.classList.add('chk');
+    important.classList.add('important');
+    todos.classList.add('input', 'todos');
+    info.setAttribute('src', '/assets/svg/info.svg');
+    info.classList.add('info');
+    // div 안에 태그 넣기
+    div.appendChild(chk);
+    div.appendChild(important);
+    div.appendChild(todos);
+    div.appendChild(info);
+    return div;
 }
 
 // todo 목록 / 완료된 목록
@@ -292,11 +293,16 @@ const handleInsert = async () => {
         }
         const { data } = await axios.post(url, body, {headers});
         if(data.status === 200) {
-            console.log(data.result);
-            handleData(select);
+            let frame = makeTodoFrame();
+            for(let i = 0; i < 4; i++) {
+                frame.children[i].setAttribute('data-no', data.result._id);
+            };
+            frame.children[2].setAttribute('value', data.result.title);
+            document.getElementById('main').prepend(frame);
             handleCount();
             todo.value = "";
         };
+        console.log(data);
     }
 };
 
