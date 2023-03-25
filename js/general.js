@@ -51,17 +51,26 @@ function handleCheck() {
         else if(e.target !== e.currentTarget) {
             let putTodo = e.target;
             console.log(putTodo);
-            putTodo.addEventListener('keydown', ({ key, isComposing }) => {
-                if (isComposing) {
-                  return
-                }
-                if (key !== "Enter") {
-                  return
-                }
-                handleUpdate(putTodo.dataset.no, putTodo.value);
-            });
+            // 클릭시 이벤트 생성
+            putTodo.addEventListener('keydown', updateTitle);
         }
     })
+}
+
+// input 클릭시 업데이트 이벤트 한번 실행하고 실행후 바로 종료
+// 여기서 말하는 this는 이 이벤트가 달린 태그를 뜻함(바로 위에 있는 putTodo)
+function updateTitle({ key, isComposing }) {
+    if (isComposing) {
+        return
+      }
+      if (key !== "Enter") {
+        return
+      }
+      handleUpdate(this.dataset.no, this.value);
+      // 작업을 끝내고 이벤트 삭제시켜서 중복 호출 안되게
+      this.removeEventListener('keydown', updateTitle);
+      // input에 걸려있던 focus 해제
+      this.blur();
 }
 
 // 완료 에니메이션 위주
@@ -108,9 +117,9 @@ async function handleUpdate(no, title) {
     };
     const { data } = await axios.put(url, body, {headers});
     if(data.status === 200) {
-        console.log(data);
-        handleData(select);
+        // handleData(select);
     }
+    console.log(data);
 }
 
 // todo 목록 가져오기
@@ -135,12 +144,13 @@ async function handleCompleteData(page) {
     };
     const { data } = await axios.get(url, {headers});
     if(data.status === 200) {
-        handleCompleteIn(data, main);
+        // handleCompleteIn(data, main);
+        handleTodoIn(data, main, 'completed')
     }
 }
 
-// 컴플리트 데이터 렌더링
-function handleCompleteIn(data, main) {
+// 가져온 데이터 렌더링
+function handleTodoIn(data, main, state) {
     main.innerHTML = "";
     console.log(data);
     let delay = 0;
@@ -153,6 +163,7 @@ function handleCompleteIn(data, main) {
             let info = document.createElement('span');
             let important = document.createElement('span');
             important.classList.add('important');
+            important.setAttribute('data-no', data.result[i]._id);
             if(data.result[i].important == '3') {
                 important.innerText = '!!!';
             } else if(data.result[i].important == '2') {
@@ -160,7 +171,7 @@ function handleCompleteIn(data, main) {
             } else if(data.result[i].important == '1') {
                 important.innerText = '  !';
             } else {
-                important.innerText = '';
+                important.innerText = '   ';
             }
             div.classList.add('todo-list');
             chk.setAttribute('type', 'checkbox');
@@ -170,15 +181,17 @@ function handleCompleteIn(data, main) {
             todos.setAttribute('value', data.result[i].title);
             todos.setAttribute('data-no', data.result[i]._id);
             todos.classList.add('input', 'todos');
-            todos.setAttribute('readonly', true);
-            chk.setAttribute('checked', true);
-            chk.setAttribute('disabled', true);
             info.classList.add('material-symbols-outlined');
             info.setAttribute('data-no', data.result[i]._id);
             info.innerText = 'info';
             let infoDiv = document.createElement('div');
             infoDiv.appendChild(info);
             infoDiv.classList.add('info');
+            if(state === 'completed') {
+                todos.setAttribute('readonly', true);
+                chk.setAttribute('checked', true);
+                chk.setAttribute('disabled', true);
+            }
             div.appendChild(important);
             div.appendChild(chk);
             div.appendChild(todos);
@@ -189,7 +202,6 @@ function handleCompleteIn(data, main) {
 }
 
 // todo 목록 / 완료된 목록
-
 btnComplete.addEventListener('click', completeWithClass);
 btnCount.addEventListener('click', todoWithClass);
 
@@ -235,52 +247,7 @@ function addEvent() {
     btnComplete.addEventListener('click', completeWithClass)
 }
 
-// 가져온 데이터 렌더링
-function handleTodoIn(data, main) {
-    main.innerHTML = "";
-    console.log(data);
-    let delay = 0;
-    for(let i = 0; i < data.result.length; i++) {
-        delay += 80;
-        setTimeout(async () => {
-            let div = document.createElement('div');
-            let todos = document.createElement('input');
-            let chk = document.createElement('input');
-            let info = document.createElement('span');
-            let important = document.createElement('span');
-            important.classList.add('important');
-            important.setAttribute('data-no', data.result[i]._id);
-            if(data.result[i].important == '3') {
-                important.innerText = '!!!';
-            } else if(data.result[i].important == '2') {
-                important.innerText = ' !!';
-            } else if(data.result[i].important == '1') {
-                important.innerText = '  !';
-            } else {
-                important.innerText = '   ';
-            }
-            div.classList.add('todo-list');
-            chk.setAttribute('type', 'checkbox');
-            chk.classList.add('chk');
-            chk.setAttribute('data-no', data.result[i]._id);
-            chk.value = (data.result[i].chk);
-            todos.setAttribute('value', data.result[i].title);
-            todos.setAttribute('data-no', data.result[i]._id);
-            todos.classList.add('input', 'todos');
-            info.classList.add('material-symbols-outlined');
-            info.setAttribute('data-no', data.result[i]._id);
-            info.innerText = 'info';
-            let infoDiv = document.createElement('div');
-            infoDiv.appendChild(info);
-            infoDiv.classList.add('info');
-            div.appendChild(important);
-            div.appendChild(chk);
-            div.appendChild(todos);
-            div.appendChild(infoDiv);
-            main.appendChild(div);
-        }, delay);
-    }
-}
+
 
 // 할일 개수, 완료한 개수
 async function handleCount() {
