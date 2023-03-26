@@ -30,14 +30,15 @@
     }
 }
 .important {
-    color:rgba(255, 0, 0, 0.8);
+    color: deeppink;
     position: absolute;
-    left:53px;
+    left:58px;
     top: 11px;
     z-index:1;
 }
 .todos {
     margin-left: 3px;
+    padding-right: 35px;
     height: 40px;
     text-overflow: ellipsis;
 }
@@ -45,21 +46,26 @@
     position: relative;
     width: 20px;
     height: 20px;
-    left: 30px;
+    left: 35px;
     /* top: 3.5px; */
     opacity: 1;
     z-index: 1;
+}
+.chk:checked {
+    /* accent-color: #67c23a; */
+    accent-color: white;
 }
 
 /* 해당 todo박스호버시 아이콘이 보임 */
 .todo-list:hover .info {
     position: absolute;
+    /* left: 535px; */
+    left: 575px;
     display: block;
     /* 흰색 필터 */
     /* filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(306deg) brightness(105%) contrast(105%); */
     /* 파란색 필터 #3399ff*/
     filter: invert(48%) sepia(35%) saturate(2946%) hue-rotate(192deg) brightness(103%) contrast(102%);
-    left: 535px;
     font-size: 24px;
     z-index: 5;
 }
@@ -70,33 +76,29 @@
     cursor: pointer;
 }
 
-.chk:checked {
-    accent-color: #67c23a;
-}
 /* 완료 체크시 색상변경 */
 .complete-color {
-    animation: changecolor 1.5s ;
+    background: linear-gradient(-90deg, white, #67c23a);
+    background-size: 300% 100%;
+    animation: changecolor 1s ;
 }
 @keyframes changecolor {
     0% {
-
+        background-position-x: 0%;
+        /* background-color: #67c23a; */
     }
-    10% {
-        background-color: #67c23a;
-        opacity: 1;
-    }
-    15% {
-        background-color: #67c23a;
-        opacity: 0.9;
+    50% {
+        background-position-x: 100%;
+        /* background-color: #67c23a; */
     }
     100% {
-        background-color: #67c23a;
-        opacity: 0.9;
+        background-position-x: 100%;
+        /* background-color: #67c23a; */
     }
 }
 /* 완료시 퇴장 애니메이션 */
 .complete {
-    animation: out 1.5s ease-in-out;
+    animation: out 1s ease-in-out;
 }
 /* 완료시 퇴장 애니메이션 */
 @keyframes out {
@@ -109,7 +111,7 @@
         opacity: 1;
     }
     100% {
-        right: -500px;
+        right: -600px;
         opacity: 0;
     }
 }

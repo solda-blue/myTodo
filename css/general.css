@@ -37,7 +37,7 @@ body {
     /* justify-content: center; */
     height: 50px;
     width: 500px;
-    padding-left: 45px;
+    padding-left: 50px;
     margin-right: 20px;
     border: 0;
     outline: none;
@@ -211,6 +211,7 @@ body {
 #title {
     text-shadow: 0px 1px 2px black;
 }
+/* memo div에 placeholder 만들기 */
 [contenteditable=true]:empty:before{
     content: attr(placeholder);
     color: #E4E7ED;

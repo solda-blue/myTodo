@@ -15,6 +15,9 @@ const optionList = document.querySelector('.selectbox-option');
 // 매모
 const memo = document.getElementById('memo');
 
+// 현재 보여주는 목록이 뭔지 알려주는 변수
+let listNow = 1;
+
 // SPA FIXME: 여기 좀 많이 손봐야 할 듯
 window.onload = function() {
     axios.get('./view/main.html')
@@ -54,7 +57,7 @@ function handleCheck() {
             // 클릭시 이벤트 생성
             putTodo.addEventListener('keydown', updateTitle);
         }
-    })
+    });
 }
 
 // input 클릭시 업데이트 이벤트 한번 실행하고 실행후 바로 종료
@@ -86,7 +89,7 @@ function handleComplete(el) {
         el.classList.remove('todo-list');
         el.classList.remove('complete');
         // el.children[2].classList.remove('complete-color');
-    }, 1500);
+    }, 1000);
 }
 
 // 완료 요청
@@ -165,20 +168,21 @@ function handleTodoIn(data) {
             let important = frame.children[1];
             switch(data.result[i].important) {
                 case '3' : important.innerText = '!!!'; break;
-                case '2' : important.innerText = '!! '; break;
-                case '1' : important.innerText = '!  '; break;
+                case '2' : important.innerText = '!! '; important.style.color = 'orangered'; break;
+                case '1' : important.innerText = '!  '; important.style.color = 'yellow'; break;
                 default : important.innerText = '  ';
-            }
+            };
             if(data.result[i].chk === 2) {
                 frame.children[0].setAttribute('checked', true);
                 frame.children[0].setAttribute('disabled', true);
                 frame.children[2].setAttribute('readonly', true);
-            }
+            };
             main.appendChild(frame);
         }, delay);
     }
 };
 
+// todo-list 형식만 따로 
 function makeTodoFrame() {
     // 태그 생성
     let div = document.createElement('div');
@@ -192,8 +196,9 @@ function makeTodoFrame() {
     chk.classList.add('chk');
     important.classList.add('important');
     todos.classList.add('input', 'todos');
-    info.setAttribute('src', '/assets/svg/info.svg');
+    todos.setAttribute('maxlength', 50);
     info.classList.add('info');
+    info.setAttribute('src', '/assets/svg/info.svg');
     // div 안에 태그 넣기
     div.appendChild(chk);
     div.appendChild(important);
@@ -207,6 +212,9 @@ btnComplete.addEventListener('click', completeWithClass);
 btnCount.addEventListener('click', todoWithClass);
 
 function todoWithClass() {
+    listNow = 1;
+    // 리스트가 렌더링 되기 전까지 연속적으로 클릭 못하도록 일단 이벤트 삭제 하고
+    // 리스트가 모두 렌더링 됐을 때 다시 이벤트 붙여주기
     btnComplete.removeEventListener('click', completeWithClass);
     btnCount.removeEventListener('click', todoWithClass);
     handleData(select);
@@ -225,6 +233,7 @@ function todoWithClass() {
     setTimeout(addEvent, (num * 80) + 300);
 };
 function completeWithClass() {
+    listNow = 2;
     btnCount.removeEventListener('click', todoWithClass);
     btnComplete.removeEventListener('click', completeWithClass);
     handleCompleteData();
@@ -293,12 +302,18 @@ const handleInsert = async () => {
         }
         const { data } = await axios.post(url, body, {headers});
         if(data.status === 200) {
-            let frame = makeTodoFrame();
-            for(let i = 0; i < 4; i++) {
-                frame.children[i].setAttribute('data-no', data.result._id);
-            };
-            frame.children[2].setAttribute('value', data.result.title);
-            document.getElementById('main').prepend(frame);
+            // list가 todo 일때만 화면에 추가
+            if(listNow === 1) {
+                let frame = makeTodoFrame();
+                for(let i = 0; i < 4; i++) {
+                    frame.children[i].setAttribute('data-no', data.result._id);
+                };
+                frame.children[2].setAttribute('value', data.result.title);
+                document.getElementById('main').prepend(frame);
+            } else if(listNow === 2) {
+                // completed 일 때 추가하면 todo 페이지도 같이 보여줌
+                todoWithClass();
+            }
             handleCount();
             todo.value = "";
         };
@@ -404,14 +419,11 @@ optionList.addEventListener('click', async function(e) {
             btnImportant.innerText = '우선 순위 : ' + arrImportant[important];
             // querySelector 로도 data- 에 접근할 수 있다
             let important1 = document.querySelector(`.important[data-no='${todoNo.dataset.no}']`);
-            if(important == '3') {
-                important1.innerText = '!!!';
-            } else if(important == '2') {
-                important1.innerText = ' !!';
-            } else if(important == '1') {
-                important1.innerText = '  !';
-            } else {
-                important1.innerText = " ";
+            switch(important) {
+                case '3' : important1.innerText = '!!!'; important1.style.color = 'deeppink';break;
+                case '2' : important1.innerText = '!! '; important1.style.color = 'orangered'; break;
+                case '1' : important1.innerText = '!  '; important1.style.color = 'yellow';break;
+                default : important1.innerText = '   '; break;
             }
         }
     }
