@@ -1,5 +1,5 @@
 const clock = document.getElementById('clock');
-const week = ['일', '월', '화', '수', '목', '금', '토'];
+const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const btnSort = document.getElementById('countSort');
 const listSort = document.querySelector('.list-sort');
 const btnCompleteDelete = document.getElementById('completeDelete');
@@ -23,18 +23,29 @@ function handleDate() {
     let day = now.getDay();
     let weekLabel = week[day];
 
-    let showDay = document.createElement('h4');
-    showDay.innerText = `${c} (${weekLabel})`;
-    clock.appendChild(showDay);
-
     let hours = now.getHours();
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
-
-    let showTime = document.createElement('h4');
+    let showTime = document.createElement('p');
     showTime.style = 'margin-left:5px';
     showTime.innerText = `${hours}:${minutes}:${seconds}`;
-    clock.appendChild(showTime);
+
+    let showWeek = document.createElement('span');
+    let showDay = document.createElement('p');
+    
+    let dayBox = document.createElement('div');
+    dayBox.classList.add('day-box');
+    showWeek.classList.add('week');
+    showDay.classList.add('day');
+    showWeek.innerText = `${weekLabel}`;
+    showDay.innerText = `${c}`;
+    dayBox.appendChild(showDay);
+    // dayBox.appendChild(showTime);
+    clock.appendChild(showWeek);
+    clock.appendChild(dayBox);
+
+
+    // clock.appendChild(showTime);
 };
 
 // FIXME: 이거 나중에 공부하고 바꿔야 할 듯

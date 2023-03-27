@@ -10,11 +10,8 @@
 </head>
 <body>
     <div class="container">
-        <div style="display:flex;justify-content: space-between;">
-            <div class="settings-box">
-                <span class="material-symbols-outlined btn-settings">settings</span>
-            </div>
-            <div id="clock" class="date-box"></div>
+        <div class="date-box">
+            <div id="clock" class="date"></div>
         </div>
         <div class="input-box">
                 <span class="material-symbols-outlined">edit_square</span>
@@ -22,9 +19,9 @@
                     placeholder="myTodo" autofocus maxlength="50" />
         </div>
         <div id="countBox">
-            <span id="count" class="btn-count on">todo</span>
-            &nbsp;&nbsp;| &nbsp; 
-            <span id="complete" class="btn-count">completed</span>
+            <div id="count" class="btn-count on">todo</div>
+            <div class="tab-border"></div>
+            <div id="complete" class="btn-count">completed</div>
         </div>
         <div id="option-box">
             <div id="countSort" class="options active">

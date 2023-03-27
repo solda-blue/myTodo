@@ -4,6 +4,7 @@ const content = document.getElementById('content');
 // todo & 완료 버튼
 const btnCount = document.getElementById('count');
 const btnComplete = document.getElementById('complete');
+const tabBorder = document.querySelector('.tab-border');
 // 모달창 
 const modal = document.getElementById('modal');
 const todoOne = document.querySelector('.todo-one');
@@ -17,7 +18,6 @@ const memo = document.getElementById('memo');
 
 // 현재 보여주는 목록이 뭔지 알려주는 변수
 let listNow = 1;
-
 // SPA FIXME: 여기 좀 많이 손봐야 할 듯
 window.onload = function() {
     axios.get('./view/main.html')
@@ -25,14 +25,28 @@ window.onload = function() {
         console.log('Main Loaded');
         content.innerHTML = res.request.responseText;
         const main = document.querySelector('.main');
-        handleData(select);
-        handleCount();
-        handleCheck();
+        onMounted();
     })
     .catch(function(err) {
         console.log(err);
     })
 };
+window.addEventListener('resize', function() {
+    let left = 0;
+    if(listNow === 1) {
+        left = btnCount.getBoundingClientRect().left;
+    } else if(listNow === 2) {
+        left = btnComplete.getBoundingClientRect().left;
+    }
+    tabBorder.style.left = `${left}px`;
+})
+// 브라우저 실행시 함수모음
+async function onMounted() {
+    await handleData(select);
+    await handleCount();
+    handleTab(btnCount);
+    handleCheck();
+}
 
 // input 이벤트 모음
 function handleCheck() {
@@ -175,8 +189,10 @@ function handleTodoIn(data) {
             let important = frame.children[1];
             switch(data.result[i].important) {
                 case '3' : important.innerText = '!!!'; break;
-                case '2' : important.innerText = '!! '; important.style.color = 'orangered'; break;
-                case '1' : important.innerText = '!  '; important.style.color = 'orange'; break;
+                case '2' : important.innerText = ' !!'; break;
+                    // important.style.color = 'orangered'; break;
+                case '1' : important.innerText = '  !'; break;
+                    // important.style.color = 'orange'; break;
                 default : important.innerText = '  ';
             };
             if(data.result[i].chk === 2) {
@@ -218,7 +234,17 @@ function makeTodoFrame() {
 btnComplete.addEventListener('click', completeWithClass);
 btnCount.addEventListener('click', todoWithClass);
 
+function handleTab(el) {
+    let width = el.clientWidth;
+    let left = el.getBoundingClientRect().left;
+    // console.log(width, left);
+    tabBorder.style.width = `${width}px`;
+    tabBorder.style.left = `${left}px`;
+    console.log(tabBorder.clientWidth, tabBorder.getBoundingClientRect().left);
+}
+
 function todoWithClass() {
+    handleTab(this);
     listNow = 1;
     // 리스트가 렌더링 되기 전까지 연속적으로 클릭 못하도록 일단 이벤트 삭제 하고
     // 리스트가 모두 렌더링 됐을 때 다시 이벤트 붙여주기
@@ -241,6 +267,7 @@ function todoWithClass() {
     setTimeout(addEvent, (num * 80) + 300);
 };
 function completeWithClass() {
+    handleTab(this);
     listNow = 2;
     btnCount.removeEventListener('click', todoWithClass);
     btnComplete.removeEventListener('click', completeWithClass);

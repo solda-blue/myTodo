@@ -1,3 +1,8 @@
+/* guide */
+    /* #f9f7e8 */
+    /* #63bfac */
+    /* #ff8fa4 */
+    /* #1f2247 */
 /* * {
     margin: 0;
     padding: 0;
@@ -39,45 +44,62 @@
     }
 }
 .important {
-    color: deeppink;
+    color: #ff8fa4;
     position: absolute;
-    left:58px;
+    left:55px;
     top: 11px;
     z-index:1;
-    opacity: 1;
 }
 .todos {
     margin-left: 3px;
-    padding-right: 35px;
+    padding-right: 28px;
     height: 40px;
     text-overflow: ellipsis;
-    /* box-shadow: 1px 1px 2px white; */
-    /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); */
 }
 
-.chk {
+/* .chk {
     position: relative;
     width: 20px;
     height: 20px;
     left: 35px;
-    /* top: 3.5px; */
     z-index: 1;
+    border-radius: 25%;
 }
 .chk:checked {
-    /* accent-color: #3399ff; */
     accent-color: white;
+} */
+
+input[type="checkbox"] {
+    position: relative;
+    left: 32px;
+    width: 20px;
+    height: 20px;
+    /* width: 1rem;
+    height: 1rem; */
+    border-radius: 50%;
+    border: 1.5px solid #63bfac;
+    appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+input[type="checkbox"]:hover {
+    background-color: #63bfac;
+}
+
+input[type="checkbox"]:checked {
+    background: #f9f7e8;
+    border: none;
 }
 
 /* 해당 todo박스호버시 아이콘이 보임 */
 .todo-list:hover .info {
     position: absolute;
-    left: 575px;
+    left: 566px;
     display: block;
-    /* 흰색 필터 */
-    /* filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(306deg) brightness(105%) contrast(105%); */
+    filter: invert(68%) sepia(7%) saturate(2125%) hue-rotate(118deg) brightness(99%) contrast(89%);
     /* 파란색 필터 #3399ff*/
-    filter: invert(48%) sepia(35%) saturate(2946%) hue-rotate(192deg) brightness(103%) contrast(102%);
-    font-size: 24px;
+    /* filter: invert(48%) sepia(35%) saturate(2946%) hue-rotate(192deg) brightness(103%) contrast(102%); */
+    font-size: 20px;
     z-index: 5;
     opacity: 1;
 }
@@ -94,28 +116,28 @@
     animation: changecolor 1.5s ease-in;
 }
 @keyframes changecolor {
-    0%   {background : linear-gradient( 90deg, #3399ff 0% 0%, #E6E8EB 0% 100%)}
-    0.5% {background : linear-gradient( 90deg, #3399ff 0% 5%, #E6E8EB 0% 100%)}
-    1%   {background : linear-gradient( 90deg, #3399ff 0% 10%, #E6E8EB 0% 100%)}
-    1.5% {background : linear-gradient( 90deg, #3399ff 0% 15%, #E6E8EB 0% 100%)}
-    2%   {background : linear-gradient( 90deg, #3399ff 0% 20%, #E6E8EB 0% 100%)}
-    2.5% {background : linear-gradient( 90deg, #3399ff 0% 25%, #E6E8EB 0% 100%)}
-    3%   {background : linear-gradient( 90deg, #3399ff 0% 30%, #E6E8EB 0% 100%)}
-    3.5% {background : linear-gradient( 90deg, #3399ff 0% 35%, #E6E8EB 0% 100%)}
-    4%   {background : linear-gradient( 90deg, #3399ff 0% 40%, #E6E8EB 0% 100%)}
-    4.5% {background : linear-gradient( 90deg, #3399ff 0% 45%, #E6E8EB 0% 100%)}
-    5%   {background : linear-gradient( 90deg, #3399ff 0% 50%, #E6E8EB 0% 100%)}
-    5.5% {background : linear-gradient( 90deg, #3399ff 0% 55%, #E6E8EB 0% 100%)}
-    6%   {background : linear-gradient( 90deg, #3399ff 0% 60%, #E6E8EB 0% 100%)}
-    6.5% {background : linear-gradient( 90deg, #3399ff 0% 65%, #E6E8EB 0% 100%)}
-    7%   {background : linear-gradient( 90deg, #3399ff 0% 70%, #E6E8EB 0% 100%)}
-    7.5% {background : linear-gradient( 90deg, #3399ff 0% 75%, #E6E8EB 0% 100%)}
-    8%   {background : linear-gradient( 90deg, #3399ff 0% 80%, #E6E8EB 0% 100%)}
-    8.5% {background : linear-gradient( 90deg, #3399ff 0% 85%, #E6E8EB 0% 100%)}
-    9%   {background : linear-gradient( 90deg, #3399ff 0% 90%, #E6E8EB 0% 100%)}
-    9.5% {background : linear-gradient( 90deg, #3399ff 0% 95%, #E6E8EB 0% 100%)}
-    10%  {background : linear-gradient( 90deg, #3399ff 0% 100%, #E6E8EB 0% 100%)}
-    100% {background : linear-gradient( 90deg, #3399ff 0% 100%, #E6E8EB 0% 100%)}
+    0%   {background : linear-gradient( 90deg, #63bfac 0% 0%, white 0% 100%)}
+    0.5% {background : linear-gradient( 90deg, #63bfac 0% 5%, white 0% 100%)}
+    1%   {background : linear-gradient( 90deg, #63bfac 0% 10%, white 0% 100%)}
+    1.5% {background : linear-gradient( 90deg, #63bfac 0% 15%, white 0% 100%)}
+    2%   {background : linear-gradient( 90deg, #63bfac 0% 20%, white 0% 100%)}
+    2.5% {background : linear-gradient( 90deg, #63bfac 0% 25%, white 0% 100%)}
+    3%   {background : linear-gradient( 90deg, #63bfac 0% 30%, white 0% 100%)}
+    3.5% {background : linear-gradient( 90deg, #63bfac 0% 35%, white 0% 100%)}
+    4%   {background : linear-gradient( 90deg, #63bfac 0% 40%, white 0% 100%)}
+    4.5% {background : linear-gradient( 90deg, #63bfac 0% 45%, white 0% 100%)}
+    5%   {background : linear-gradient( 90deg, #63bfac 0% 50%, white 0% 100%)}
+    5.5% {background : linear-gradient( 90deg, #63bfac 0% 55%, white 0% 100%)}
+    6%   {background : linear-gradient( 90deg, #63bfac 0% 60%, white 0% 100%)}
+    6.5% {background : linear-gradient( 90deg, #63bfac 0% 65%, white 0% 100%)}
+    7%   {background : linear-gradient( 90deg, #63bfac 0% 70%, white 0% 100%)}
+    7.5% {background : linear-gradient( 90deg, #63bfac 0% 75%, white 0% 100%)}
+    8%   {background : linear-gradient( 90deg, #63bfac 0% 80%, white 0% 100%)}
+    8.5% {background : linear-gradient( 90deg, #63bfac 0% 85%, white 0% 100%)}
+    9%   {background : linear-gradient( 90deg, #63bfac 0% 90%, white 0% 100%)}
+    9.5% {background : linear-gradient( 90deg, #63bfac 0% 95%, white 0% 100%)}
+    10%  {background : linear-gradient( 90deg, #63bfac 0% 100%, white 0% 100%)}
+    100% {background : linear-gradient( 90deg, #63bfac 0% 100%, white 0% 100%)}
 }
 /* 완료시 퇴장 애니메이션 */
 .complete {

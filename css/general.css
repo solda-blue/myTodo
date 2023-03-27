@@ -1,6 +1,12 @@
+/* guide */
+    /* #f9f7e8 */
+    /* #63bfac */
+    /* #ff8fa4 */
+    /* #1f2247 */
 * {
     margin: 0;
     padding: 0;
+    /* color: #1f2247; */
 }
 body {
     /* x를 hidden을 주면 강제로 여백을 없앨 수 있다 */
@@ -10,17 +16,16 @@ body {
 .container {
     /* background-image:
         linear-gradient(rgba(0, 0, 0, 0.6),rgba(255, 255, 255, 0)),
-        url('../assets/bg/airport.png'); */
-    background: #F2F3F5;
-    background-size: cover;
-    background-repeat: no-repeat;
-    /* height: 900px; */
+        url('../assets/bg/airport.png');
+        background-size: cover;
+        background-repeat: no-repeat; */
+        /* height: 900px; */
+    background: #f9f7e8;
     min-width: 620px;
 }
 .input-box {
     width: 100%;
     display: flex;
-    padding-top: 50px;
     justify-content: center;
 }
 #todo:hover {
@@ -33,24 +38,24 @@ body {
     width: 500px;
 } */
 .input {
-    /* background-color: #E6E8EB; */
+    color: #1f2247;
     background-color: white;
-    color: #303133;
-    /* justify-content: center; */
+    /* color: #303133; */
     height: 50px;
     width: 500px;
-    padding-left: 50px;
+    padding-left: 47px;
     margin-right: 20px;
     border: 0;
     outline: none;
-    border-radius: 10px;
+    border-radius: 25px;
     font-size: 1.2rem;
-    /* opacity: 0.7; */
     overflow: auto;
-    /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); */
-    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.12),
-                0 3px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px; */
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px; */
+    /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
+
 .material-symbols-outlined {
     position: relative;
     left: 33px;
@@ -59,31 +64,31 @@ body {
     z-index: 1;
 }
 
-/* 세팅버튼 */
-.settings-box {
-    color: white;
-    padding-top: 8px;
-}
-.btn-settings {
-    font-size: 20px;
-    /* text-shadow: 1px 2px 3px black; */
-}
-.btn-settings:hover {
-    font-weight: bold;
-    cursor: pointer;
-    text-shadow: 1px 2px 3px black;
-}
-
 /* 시계 */
 .date-box {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+.date {
     display: flex;
     justify-content: right;
-    color: white;
-    padding: 20px;
-    text-shadow: 1px 1px 2px black;
+    color: #63bfac;
+}
+.week {
+    font-size: 42px;
+    font-weight: 500;
+}
+.day-box {
+    position: relative;
+    /* top: 23px; */
+}
+.day {
+    margin-left: 5px;
 }
 
-/* toto & complete */
+/* todo & complete */
 #countBox {
     position: relative;
     /* 여기가 문제였음 */
@@ -94,16 +99,28 @@ body {
     color: #C0C4CC;
     font-size: 1.1rem;
     font-weight: bold;
-    /* border: 2px white solid; */
+}
+.tab-border {
+    position: absolute;
+    /* width: 70px;
+    left: 648.09375px; */
+    top: 22px;
+    background-color: transparent;
+    border-bottom: 3px #63bfac solid;
+    transition: all 0.3s ease-in-out;
+    z-index: 10px;
 }
 .on {
-    border-bottom: 2px white solid;
     font-weight: bold;
-    color: white;
+    color: #63bfac;
 }
+.btn-count {
+    padding: 0 5px;
+}
+
 .btn-count:hover {
     cursor: pointer;
-    color: white;
+    color: #63bfac;
 }
 .btn-count:active {
     position: relative;
