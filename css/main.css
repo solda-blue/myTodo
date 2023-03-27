@@ -18,6 +18,15 @@
     margin: 7px;
     animation: slide 0.3s ease-in-out;
 }
+.todo-list:hover .chk{
+    opacity: 1;
+}
+.todo-list:hover .todos {
+    background-color: white;
+}
+/* .todo-list:hover {
+    transform: scale(1.05);
+} */
 /* todo 리스트업 애니메이션 */
 @keyframes slide {
     from {
@@ -35,31 +44,33 @@
     left:58px;
     top: 11px;
     z-index:1;
+    opacity: 1;
 }
 .todos {
     margin-left: 3px;
     padding-right: 35px;
     height: 40px;
     text-overflow: ellipsis;
+    /* box-shadow: 1px 1px 2px white; */
+    /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); */
 }
+
 .chk {
     position: relative;
     width: 20px;
     height: 20px;
     left: 35px;
     /* top: 3.5px; */
-    opacity: 1;
     z-index: 1;
 }
 .chk:checked {
-    /* accent-color: #67c23a; */
+    /* accent-color: #3399ff; */
     accent-color: white;
 }
 
 /* 해당 todo박스호버시 아이콘이 보임 */
 .todo-list:hover .info {
     position: absolute;
-    /* left: 535px; */
     left: 575px;
     display: block;
     /* 흰색 필터 */
@@ -68,6 +79,7 @@
     filter: invert(48%) sepia(35%) saturate(2946%) hue-rotate(192deg) brightness(103%) contrast(102%);
     font-size: 24px;
     z-index: 5;
+    opacity: 1;
 }
 .info {
     display: none;
@@ -78,41 +90,41 @@
 
 /* 완료 체크시 색상변경 */
 .complete-color {
-    background: linear-gradient(-90deg, white, #67c23a);
-    background-size: 300% 100%;
-    animation: changecolor 1s ;
+    opacity: 1;
+    animation: changecolor 1.5s ease-in;
 }
 @keyframes changecolor {
-    0% {
-        background-position-x: 0%;
-        /* background-color: #67c23a; */
-    }
-    50% {
-        background-position-x: 100%;
-        /* background-color: #67c23a; */
-    }
-    100% {
-        background-position-x: 100%;
-        /* background-color: #67c23a; */
-    }
+    0%   {background : linear-gradient( 90deg, #3399ff 0% 0%, #E6E8EB 0% 100%)}
+    0.5% {background : linear-gradient( 90deg, #3399ff 0% 5%, #E6E8EB 0% 100%)}
+    1%   {background : linear-gradient( 90deg, #3399ff 0% 10%, #E6E8EB 0% 100%)}
+    1.5% {background : linear-gradient( 90deg, #3399ff 0% 15%, #E6E8EB 0% 100%)}
+    2%   {background : linear-gradient( 90deg, #3399ff 0% 20%, #E6E8EB 0% 100%)}
+    2.5% {background : linear-gradient( 90deg, #3399ff 0% 25%, #E6E8EB 0% 100%)}
+    3%   {background : linear-gradient( 90deg, #3399ff 0% 30%, #E6E8EB 0% 100%)}
+    3.5% {background : linear-gradient( 90deg, #3399ff 0% 35%, #E6E8EB 0% 100%)}
+    4%   {background : linear-gradient( 90deg, #3399ff 0% 40%, #E6E8EB 0% 100%)}
+    4.5% {background : linear-gradient( 90deg, #3399ff 0% 45%, #E6E8EB 0% 100%)}
+    5%   {background : linear-gradient( 90deg, #3399ff 0% 50%, #E6E8EB 0% 100%)}
+    5.5% {background : linear-gradient( 90deg, #3399ff 0% 55%, #E6E8EB 0% 100%)}
+    6%   {background : linear-gradient( 90deg, #3399ff 0% 60%, #E6E8EB 0% 100%)}
+    6.5% {background : linear-gradient( 90deg, #3399ff 0% 65%, #E6E8EB 0% 100%)}
+    7%   {background : linear-gradient( 90deg, #3399ff 0% 70%, #E6E8EB 0% 100%)}
+    7.5% {background : linear-gradient( 90deg, #3399ff 0% 75%, #E6E8EB 0% 100%)}
+    8%   {background : linear-gradient( 90deg, #3399ff 0% 80%, #E6E8EB 0% 100%)}
+    8.5% {background : linear-gradient( 90deg, #3399ff 0% 85%, #E6E8EB 0% 100%)}
+    9%   {background : linear-gradient( 90deg, #3399ff 0% 90%, #E6E8EB 0% 100%)}
+    9.5% {background : linear-gradient( 90deg, #3399ff 0% 95%, #E6E8EB 0% 100%)}
+    10%  {background : linear-gradient( 90deg, #3399ff 0% 100%, #E6E8EB 0% 100%)}
+    100% {background : linear-gradient( 90deg, #3399ff 0% 100%, #E6E8EB 0% 100%)}
 }
 /* 완료시 퇴장 애니메이션 */
 .complete {
-    animation: out 1s ease-in-out;
+    animation: out 1.5s;   
 }
 /* 완료시 퇴장 애니메이션 */
 @keyframes out {
-    0% {
-        right : 0px;
-        opacity: 1;
-    }
-    50% {
-        right : 0px;
-        opacity: 1;
-    }
-    100% {
-        right: -600px;
-        opacity: 0;
-    }
+    0%   { right : 0px; opacity: 1; }
+    50%  { right : 0px; opacity: 1; }
+    100% { right: -500px; opacity: 0; }
 }
 

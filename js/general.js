@@ -56,6 +56,7 @@ function handleCheck() {
             console.log(putTodo);
             // 클릭시 이벤트 생성
             putTodo.addEventListener('keydown', updateTitle);
+            putTodo.addEventListener('focusout', updateTitleFocus);
         }
     });
 }
@@ -72,8 +73,14 @@ function updateTitle({ key, isComposing }) {
       handleUpdate(this.dataset.no, this.value);
       // 작업을 끝내고 이벤트 삭제시켜서 중복 호출 안되게
       this.removeEventListener('keydown', updateTitle);
+      this.removeEventListener('focusout', updateTitleFocus);
       // input에 걸려있던 focus 해제
       this.blur();
+};
+function updateTitleFocus() {
+    handleUpdate(this.dataset.no, this.value);
+    this.removeEventListener('keydown', updateTitle);
+    this.removeEventListener('focusout', updateTitleFocus);
 }
 
 // 완료 에니메이션 위주
@@ -82,14 +89,14 @@ function handleComplete(el) {
     // 완료 요청 보내기
     handlePutCheck(no);
     // css 애니메이션이랑 시간을 맞춰야 함
-    // el.children[2].classList.add('complete-color');
+    el.children[2].classList.add('complete-color');
     el.classList.add('complete');
     setTimeout(() => {
         el.style.display = 'none';
         el.classList.remove('todo-list');
         el.classList.remove('complete');
         // el.children[2].classList.remove('complete-color');
-    }, 1000);
+    }, 1500);
 }
 
 // 완료 요청
@@ -169,7 +176,7 @@ function handleTodoIn(data) {
             switch(data.result[i].important) {
                 case '3' : important.innerText = '!!!'; break;
                 case '2' : important.innerText = '!! '; important.style.color = 'orangered'; break;
-                case '1' : important.innerText = '!  '; important.style.color = 'yellow'; break;
+                case '1' : important.innerText = '!  '; important.style.color = 'orange'; break;
                 default : important.innerText = '  ';
             };
             if(data.result[i].chk === 2) {
@@ -217,6 +224,7 @@ function todoWithClass() {
     // 리스트가 모두 렌더링 됐을 때 다시 이벤트 붙여주기
     btnComplete.removeEventListener('click', completeWithClass);
     btnCount.removeEventListener('click', todoWithClass);
+    btnCompleteDelete.removeEventListener('click', DeleteAllCompleted);
     handleData(select);
     btnComplete.classList.remove('on');
     btnCount.classList.add('on');
@@ -236,6 +244,7 @@ function completeWithClass() {
     listNow = 2;
     btnCount.removeEventListener('click', todoWithClass);
     btnComplete.removeEventListener('click', completeWithClass);
+    btnCompleteDelete.removeEventListener('click', DeleteAllCompleted);
     handleCompleteData();
     btnCount.classList.remove('on');
     btnComplete.classList.add('on');
@@ -253,11 +262,10 @@ function completeWithClass() {
 };
 // 이렇게 따로 함수로 만들어서 setTimeout에 넣어야 작동하네
 function addEvent() {
-    btnCount.addEventListener('click', todoWithClass)
-    btnComplete.addEventListener('click', completeWithClass)
+    btnCount.addEventListener('click', todoWithClass);
+    btnComplete.addEventListener('click', completeWithClass);
+    btnCompleteDelete.addEventListener('click', DeleteAllCompleted);
 }
-
-
 
 // 할일 개수, 완료한 개수
 async function handleCount() {
