@@ -1,3 +1,31 @@
+// 모달창 
+const modal = document.getElementById('modal');
+const todoOne = document.querySelector('.todo-one');
+const btnDelete = document.getElementById('delete');
+const todoNo = document.getElementById('todoNo');
+// 우선순위 관련
+const btnImportant = document.getElementById('btnImportant');
+const optionList = document.querySelector('.selectbox-option');
+// 목표일 관련
+const btnGoal = document.getElementById('btnGoal');
+const btnMonth = document.getElementById('btnMonth');
+const goalOptionList = document.querySelector('.daybox-option');
+const btnDay = document.getElementById('btnDay');
+const monthList = document.querySelector('.month-option');
+const dayList = document.querySelector('.day-option');
+// 매모
+const memo = document.getElementById('memo');
+
+// makeDay();
+
+function makeDay() {
+    for(let i = 0; i < 31; i++) {
+        let day = document.createElement('button');
+        day.innerText = i + 1;
+        day.classList.add('day-btn');
+        dayList.appendChild(day);
+    }
+}
 
 // todo 한개 조회
 async function handleSelectOneTodo(no) {
@@ -64,6 +92,31 @@ function closeModal() {
     setTimeout(() => {modal.style.display = 'none';}, 200);
 }
 
+btnMonth.addEventListener('mouseover', function() {
+    if(todoNo.dataset.chk === '1') {
+        monthList.classList.add('month-option-on');
+        console.log('hi');
+    }
+});
+btnMonth.addEventListener('mouseleave', function() {
+    if(todoNo.dataset.chk === '1') {
+        monthList.classList.remove('month-option-on');
+    }
+})
+
+// 목표일 옵션 토글
+btnGoal.addEventListener('click', function() {
+    if(todoNo.dataset.chk === "1") {
+        if(!this.classList.contains('days-btn-on')) {
+            this.classList.add('days-btn-on');
+            goalOptionList.classList.add('daybox-option-on');
+        } else {
+            this.classList.remove('days-btn-on');
+            goalOptionList.classList.add('daybox-option-on');
+        }
+    }
+});
+
 // 우선순위 옵션 토글
 btnImportant.addEventListener('click', function() {
     if(todoNo.dataset.chk === "1") {
@@ -82,6 +135,11 @@ modal.addEventListener('click', function(e) {
     !e.target.classList.contains('selectbox-option')) {
         optionList.classList.remove('selectbox-option-on');
         btnImportant.classList.remove('toggle-btn-on');
+    }
+    if(!e.target.classList.contains('days-btn-on')&&
+    !e.target.classList.contains('daybox-option')) {
+        goalOptionList.classList.remove('daybox-option-on');
+        btnGoal.classList.remove('days-btn-on');
     }
 });
 

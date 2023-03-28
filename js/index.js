@@ -86,7 +86,7 @@ listSort.addEventListener('click', function(e) {
 // 완료 항목 전체삭제
 async function DeleteAllCompleted() {
     if(document.querySelector('.main').childElementCount > 0) {
-        // if(confirm('삭제하시겠습니까?')) {
+        if(confirm('삭제하시겠습니까?')) {
             const url = `http://127.0.0.1:8088/todo/deleteall.json`;
             const body = {};
             const headers = {
@@ -98,7 +98,7 @@ async function DeleteAllCompleted() {
                 handleCount();
                 handleNoti('삭제되었습니다');
             }
-        // }
+        }
     } else {
         handleNoti('삭제할 항목이 없습니다', 1);
     }

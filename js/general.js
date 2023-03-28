@@ -5,16 +5,6 @@ const content = document.getElementById('content');
 const btnCount = document.getElementById('count');
 const btnComplete = document.getElementById('complete');
 const tabBorder = document.querySelector('.tab-border');
-// 모달창 
-const modal = document.getElementById('modal');
-const todoOne = document.querySelector('.todo-one');
-const btnDelete = document.getElementById('delete');
-const todoNo = document.getElementById('todoNo');
-// 우선순위 관련
-const btnImportant = document.querySelector('.toggle-btn');
-const optionList = document.querySelector('.selectbox-option');
-// 매모
-const memo = document.getElementById('memo');
 
 // 현재 보여주는 목록이 뭔지 알려주는 변수
 let listNow = 1;

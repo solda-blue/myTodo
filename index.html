@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="./css/general.css" />
+    <link rel="stylesheet" href="./css/selectOne.css" />
     <title>My Todo</title>
 </head>
 <body>
@@ -57,18 +58,49 @@
             <div style="margin-bottom: 5px;">
                 <h3 id="title">title</h3>
             </div>
-            <hr />
+            <div class="horizontal-box">
+                <div class="horizontal"></div>
+            </div>
             <div id="memo" contenteditable="true" placeholder="memo"></div>
+            <!-- 우선순위, 목표시간 옵션 사항들 -->
             <div class="detail">
                 <div class="important-box">
-                    <button class="toggle-btn">우선 순위 : </button>
-                    <div class="selectbox-option hide">
+                    <button id="btnImportant" class="toggle-btn">우선 순위 : </button>
+                    <div class="selectbox-option">
                         <button value="3" class="option-btn">높음</button>
                         <button value="2" class="option-btn">중간</button>
                         <button value="1" class="option-btn">낮음</button>
                         <button value="0" class="option-btn">없음</button>
                     </div>
                 </div>
+                <div class="day-box">
+                    <button id="btnGoal" class="days-btn">목표일 : </button>
+
+                    <div class="daybox-option">
+                        <button id="btnMonth" class="days-btn">월</button>                        
+                        <button id="btnDay" class="days-btn">일</button>
+                        <div class="day-option">
+                            
+                        </div>
+                    </div>
+                    <div class="month-option">
+                        <button class="month-btn">1</button>
+                        <button class="month-btn">2</button>
+                        <button class="month-btn">3</button>
+                        <button class="month-btn">4</button>
+                        <button class="month-btn">5</button>
+                        <button class="month-btn">6</button>
+                        <button class="month-btn">7</button>
+                        <button class="month-btn">8</button>
+                        <button class="month-btn">9</button>
+                        <button class="month-btn">10</button>
+                        <button class="month-btn">11</button>
+                        <button class="month-btn">12</button>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal-box">
+                <div class="horizontal"></div>
             </div>
             <div id="deleteBox">
                 <div id="delete">삭제</div>
