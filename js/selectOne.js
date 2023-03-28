@@ -23,6 +23,7 @@ function makeDay() {
     for(let i = 0; i < 31; i++) {
         let day = document.createElement('button');
         day.innerText = i + 1;
+        day.setAttribute('data-day', i+1);
         day.classList.add('day-btn');
         dayList.appendChild(day);
     }
@@ -49,6 +50,14 @@ async function handleSelectOneTodo(no) {
         memo.innerText = data.result.memo;
         let arrImportant = ['없음', '낮음', '중간', '높음'];
         btnImportant.innerText = '우선 순위 : ' + arrImportant[data.result.important];
+        if(data.result.day === '') {
+            btnGoal.innerText = '날짜 : 없음';
+        } else {
+            // FIXME: 나중에 xx면 안보이게 하기
+            let arr = data.result.day.split('-');
+            // if(arr[1] === 'xx')
+            btnGoal.innerText = `날짜 : ${arr[1]}월 ${arr[2]}일`;
+        }
     }
 }
 
@@ -92,6 +101,41 @@ function closeModal() {
     todoOne.style.animation = 'scaledown 0.3s';
     setTimeout(() => {modal.style.display = 'none';}, 200);
 }
+
+// 날짜 월 바꾸기
+monthList.addEventListener('click', async function(e) {
+    if(e.target !== e.currentTarget) {
+        let month = e.target.dataset.month;
+
+        const url = `http://127.0.0.1:8088/todo/updatemonth.json`;
+        const headers = {
+            "Content-Type":"application/json"
+        };
+        const body = {
+            no : todoNo.dataset.no,
+            month : month
+        };
+        const { data } = await axios.put(url, body, {headers});
+        if(data.status === 200) {
+            let month1 = "";
+            if(month[0] == 0) {
+                month1 = month.slice(1);
+            } else {
+                month1 = month;
+            }
+            console.log(data.result);
+            btnGoal.innerText = '날짜 : ' + month1;
+        }
+    }
+});
+
+// 날짜 일 바꾸기
+dayList.addEventListener('click', async function(e) {
+    if(e.target !== e.currentTarget) {
+        let day = e.target.dataset.day;
+        console.log(day);
+    }
+})
 
 btnMonth.addEventListener('mouseover', function() {
     if(todoNo.dataset.chk === '1') {
@@ -168,8 +212,8 @@ todoOne.addEventListener('click', function(e) {
         optionList.classList.remove('selectbox-option-on');
         btnImportant.classList.remove('toggle-btn-on');
     }
-    console.log(e.target);
-    console.log(e.currentTarget);
+    // console.log(e.target);
+    // console.log(e.currentTarget);
     if(e.target.classList.contains('month-btn')) {
         console.log('hi');
     } else if(e.target.classList.contains('day-btn')) {
