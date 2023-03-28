@@ -14,13 +14,14 @@
             <div id="clock" class="date"></div>
         </div>
         <div class="input-box">
-                <span class="material-symbols-outlined">edit_square</span>
+                <span class="material-symbols-outlined icon-write">edit_square</span>
                 <input id="todo" class="input" type="text"
                     placeholder="myTodo" autofocus maxlength="50" />
         </div>
         <div id="countBox">
-            <div id="count" class="btn-count on">todo</div>
             <div class="tab-border"></div>
+            <div id="count" class="btn-count on">todo</div>
+            <div style="width: 20px;background-color: #f9f7e8;"></div>
             <div id="complete" class="btn-count">completed</div>
         </div>
         <div id="option-box">
@@ -35,7 +36,7 @@
                 <p data-sort="2">지난순</p>
                 <p data-sort="3">중요순</p>
             </div>
-            <div id="completeDelete" class="options">
+            <div id="completeDelete" class="options delete-opt">
                 <span>완료 항목 삭제</span>
                 <span class="material-symbols-outlined icon-remove-done">
                     remove_done
@@ -59,18 +60,14 @@
             <hr />
             <div id="memo" contenteditable="true" placeholder="memo"></div>
             <div class="detail">
-                <!-- <input type="date">
-                <input type="time" /> -->
-                <div style="display: flex;justify-content: left;">
-                    <button class="toggle-btn">
-                        우선 순위 : 
-                    </button>
-                    <ul class="selectbox-option hide">
-                        <li><button value="3" class="option-btn">높음</button></li>
-                        <li><button value="2" class="option-btn">중간</button></li>
-                        <li><button value="1" class="option-btn">낮음</button></li>
-                        <li><button value="0" class="option-btn">없음</button></li>
-                    </ul>
+                <div class="important-box">
+                    <button class="toggle-btn">우선 순위 : </button>
+                    <div class="selectbox-option hide">
+                        <button value="3" class="option-btn">높음</button>
+                        <button value="2" class="option-btn">중간</button>
+                        <button value="1" class="option-btn">낮음</button>
+                        <button value="0" class="option-btn">없음</button>
+                    </div>
                 </div>
             </div>
             <div id="deleteBox">
@@ -84,5 +81,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./js/index.js"></script>
     <script src="./js/general.js"></script>
+    <script src="./js/selectOne.js"></script>
 </body>
 </html>

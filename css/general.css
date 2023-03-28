@@ -1,8 +1,9 @@
-/* guide */
-    /* #f9f7e8 */
-    /* #63bfac */
-    /* #ff8fa4 */
-    /* #1f2247 */
+/* #f9f7e8 배경 */
+/* #63bfac 메인 */
+/* #ff8fa4 포인트 */
+/* #1f2247 텍스트 */
+/* #F2F3F5 텍스트필드 */
+/* #C0C4CC 플레이스홀더 */
 * {
     margin: 0;
     padding: 0;
@@ -14,12 +15,6 @@ body {
     overflow-y: auto;
 }
 .container {
-    /* background-image:
-        linear-gradient(rgba(0, 0, 0, 0.6),rgba(255, 255, 255, 0)),
-        url('../assets/bg/airport.png');
-        background-size: cover;
-        background-repeat: no-repeat; */
-        /* height: 900px; */
     background: #f9f7e8;
     min-width: 620px;
 }
@@ -27,12 +22,13 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-}
-#todo:hover {
-    opacity: 1;
+    position: relative;
 }
 #todo:focus {
-    opacity: 1;
+    background-color: #F2F3F5;
+}
+.icon-write {
+    position: absolute;
 }
 /* #todo {
     width: 500px;
@@ -50,9 +46,6 @@ body {
     border-radius: 25px;
     font-size: 1.2rem;
     overflow: auto;
-    /* box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px; */
-    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px; */
-    /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
@@ -93,7 +86,7 @@ body {
     position: relative;
     /* 여기가 문제였음 */
     margin: 30px 0px 5px;
-    padding-left: 40px;
+    padding-left: 32px;
     display: flex;
     justify-content: center;
     color: #C0C4CC;
@@ -102,8 +95,6 @@ body {
 }
 .tab-border {
     position: absolute;
-    /* width: 70px;
-    left: 648.09375px; */
     top: 22px;
     background-color: transparent;
     border-bottom: 3px #63bfac solid;
@@ -121,6 +112,7 @@ body {
 .btn-count:hover {
     cursor: pointer;
     color: #63bfac;
+    transition: all 0.3s;
 }
 .btn-count:active {
     position: relative;
@@ -132,9 +124,9 @@ body {
     display: flex;
     margin: 0 auto;
     margin-bottom: 5px;
-    width: 588px;
+    width: 575px;
     justify-content: right;
-    color: #C0C4CC;
+    color: #63bfac;
     position: relative;
 }
 .options {
@@ -143,12 +135,23 @@ body {
     padding: 3px 5px 5px 10px;
 }
 .options:hover {
-    background-color: rgba(0, 0, 0, 0.25);
     color: white;
     cursor: pointer;
+    background-color: #63bfac;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: all 0.3s;
 }
 .options-add {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: #63bfac;
+    color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+/* 전체 삭제 전용 색 */
+.delete-opt {
+    color: #ff8fa4;
+}
+.delete-opt:hover {
+    background-color: #ff8fa4;
     color: white;
 }
 .icon-arrow-drop-down {
@@ -157,15 +160,22 @@ body {
     left: 0;
     top: 4px;
 }
+/* 드랍다운 메뉴 */
 .list-sort {
     position: absolute;
-    top: 33px;
+    top: 35px;
+    height: 0;
+    overflow: hidden;
     width: 73.5px;
     border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.25);
-    color: white;
-    display: none;
-    z-index: 13;
+    background-color: white;
+    color: #63bfac;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    z-index: 12;
+    transition: all 0.3s;
+}
+.list-sort-on {
+    height: 285%;
 }
 .list-sort p {
     padding: 5px;
@@ -173,8 +183,10 @@ body {
 .list-sort p:hover {
     cursor: pointer;
     border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: #63bfac;
+    color: white;
 }
+
 .icon-remove-done {
     font-size: 18px;
     position: relative;
@@ -203,13 +215,12 @@ body {
     position: absolute;
     width: 400px;
     padding: 1.5rem;
-    /* background:linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.6)); */
-    background:linear-gradient(transparent, rgba(255, 255, 255, 0.6));
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-color: #f9f7e8;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     border-radius: 12px;
     z-index: 10;
     top: 22.5%;
-    color: white;
+    color: #1f2247;
     /* animation: scaleup 0.25s; */
 }
 /* 모달창 확대 애니메이션 */
@@ -231,12 +242,12 @@ body {
     }
 }
 #title {
-    text-shadow: 0px 1px 2px black;
+    /* text-shadow: 0px 1px 2px black; */
 }
 /* memo div에 placeholder 만들기 */
 [contenteditable=true]:empty:before{
     content: attr(placeholder);
-    color: #E4E7ED;
+    color: #C0C4CC;
     display: block; /* For Firefox */
 }
 #memo {
@@ -252,26 +263,37 @@ body {
     /* background-color: red;
     border-radius: 5px; */
 }
+#memo:focus {
+    background-color: #F2F3F5;
+    border-radius: 4px;
+}
 .detail {
     /* margin-top: 10px; */
 }
 
 #delete {
+    float: right;
     margin-top: 12px;
     text-align: center;
     padding-top: 7px;
-    width: 100%;
+    width: 120px;
     height: 25px;
-    background-color: rgba(255, 255, 255, 0.7);
-    color: red;
-    box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
+    color: #ff8fa4;
     border-radius: 4px;
 }
 #delete:hover {
     cursor: pointer;
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: #ff8fa4;
     color: white;
     font-weight: 500;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: all 0.3s;
+}
+/* 우선순위 박스 */
+.important-box {
+    display: flex;
+    justify-content: left;
+    position: relative;
 }
 
 .toggle-btn {
@@ -279,29 +301,46 @@ body {
     line-height: 30px;
     border: 0;
     border-radius: 4px;
-    color: white;
     background-color: transparent;
+    color: #63bfac;
+}
+.toggle-btn-on {
+    background-color: #63bfac;
+    color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 .toggle-btn:hover {
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: #63bfac;
+    color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: all 0.3s;
 }
 .selectbox-option {
     position: absolute;
-    left: 142.5px;
-    display: flex;
+    left: 62px;
+    top: 35px;
+    height: 0;
+    overflow: hidden;
+    width: 38px;
     list-style: none;
     border: 0;
     border-radius: 4px;
-    animation: dropdown 0.4s;
+    background-color: white;
+    color: #63bfac;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: all 0.3s;
+    /* animation: dropdown 0.4s; */
+}
+.selectbox-option-on {
+    height: 120px;
 }
 .selectbox-option > li {
-    width: 70px;
+    width: 73.5px;
     background-color: transparent;
 }
 .option-btn {
     width: inherit;
-    color: white;
     line-height: 30px;
     border: 0;
     background-color: transparent;
@@ -309,7 +348,8 @@ body {
     z-index: 11;
 }
 .option-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: #63bfac;
+    color: white;
     cursor: pointer;
 }
 
@@ -324,9 +364,9 @@ body {
     }
 }
 
-.hide {
+/* .hide {
     display: none;
-}
+} */
 
 /* select 같은 모달용 */
 .modal-transparent {
@@ -344,6 +384,7 @@ body {
     /* fixed로 해야 scrollY에 상관없이 화면에 보여짐 */
     position: fixed;
     width: 100%;
+    height: 40px;
     top: -50px;
     /* left: 20px; */
     display: flex;
@@ -353,10 +394,10 @@ body {
 .noti {
     background-color: white;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 25px;
     display: flex;
     align-items: center;
-    box-shadow: 2px 3px 5px rgba(255, 255, 255, 0.25);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 /* 들어갔다 나오는 애니메이션 */
 @keyframes Noti {

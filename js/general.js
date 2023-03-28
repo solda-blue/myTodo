@@ -18,6 +18,7 @@ const memo = document.getElementById('memo');
 
 // 현재 보여주는 목록이 뭔지 알려주는 변수
 let listNow = 1;
+
 // SPA FIXME: 여기 좀 많이 손봐야 할 듯
 window.onload = function() {
     axios.get('./view/main.html')
@@ -31,6 +32,7 @@ window.onload = function() {
         console.log(err);
     })
 };
+// 브라우저 크기 변할 때 실행되는 함수
 window.addEventListener('resize', function() {
     let left = 0;
     if(listNow === 1) {
@@ -199,6 +201,8 @@ function handleTodoIn(data) {
                 frame.children[0].setAttribute('checked', true);
                 frame.children[0].setAttribute('disabled', true);
                 frame.children[2].setAttribute('readonly', true);
+                frame.children[2].style = 'background-color:#63bfac;color:#f9f7e8';
+                frame.children[3].style = 'filter: invert(93%) sepia(19%) saturate(313%) hue-rotate(342deg) brightness(111%) contrast(95%);'
             };
             main.appendChild(frame);
         }, delay);
@@ -234,24 +238,26 @@ function makeTodoFrame() {
 btnComplete.addEventListener('click', completeWithClass);
 btnCount.addEventListener('click', todoWithClass);
 
+// 탭버튼 width와 left값에 따라 맞춰서 이동하는 함수
 function handleTab(el) {
     let width = el.clientWidth;
     let left = el.getBoundingClientRect().left;
-    // console.log(width, left);
     tabBorder.style.width = `${width}px`;
     tabBorder.style.left = `${left}px`;
-    console.log(tabBorder.clientWidth, tabBorder.getBoundingClientRect().left);
+    // console.log(tabBorder.clientWidth, tabBorder.getBoundingClientRect().left);
 }
 
+// todo / completed 목록 가져오기와 UI
 function todoWithClass() {
-    handleTab(this);
+    handleTab(btnCount);
     listNow = 1;
+    handleData(select);
     // 리스트가 렌더링 되기 전까지 연속적으로 클릭 못하도록 일단 이벤트 삭제 하고
     // 리스트가 모두 렌더링 됐을 때 다시 이벤트 붙여주기
     btnComplete.removeEventListener('click', completeWithClass);
     btnCount.removeEventListener('click', todoWithClass);
     btnCompleteDelete.removeEventListener('click', DeleteAllCompleted);
-    handleData(select);
+    
     btnComplete.classList.remove('on');
     btnCount.classList.add('on');
     btnCompleteDelete.classList.remove('active');
@@ -267,12 +273,14 @@ function todoWithClass() {
     setTimeout(addEvent, (num * 80) + 300);
 };
 function completeWithClass() {
-    handleTab(this);
+    handleTab(btnComplete);
     listNow = 2;
+    handleCompleteData();
+
     btnCount.removeEventListener('click', todoWithClass);
     btnComplete.removeEventListener('click', completeWithClass);
     btnCompleteDelete.removeEventListener('click', DeleteAllCompleted);
-    handleCompleteData();
+
     btnCount.classList.remove('on');
     btnComplete.classList.add('on');
     btnSort.classList.remove('active');
@@ -355,131 +363,3 @@ const handleInsert = async () => {
         console.log(data);
     }
 };
-
-// todo 한개 조회
-async function handleSelectOneTodo(no) {
-    const url = `http://127.0.0.1:8088/todo/selectone.json?no=${no}`;
-    const headers = {
-        'Content-Type' : 'application/json'
-    };
-    const { data } = await axios.get(url, {headers});
-    if(data.status === 200) {
-        console.log(data);
-        modal.style.display = 'flex';
-        todoOne.style.animation = 'scaleup 0.3s';
-        const title = document.getElementById('title');
-        title.innerText = data.result.title;
-        todoNo.setAttribute('data-no', data.result._id);
-        todoNo.setAttribute('data-chk', data.result.chk);
-        if(data.result.chk !== 1) {
-            memo.contentEditable = false;
-        };
-        memo.innerText = data.result.memo;
-        let arrImportant = ['없음', '낮음', '중간', '높음'];
-        btnImportant.innerText = '우선 순위 : ' + arrImportant[data.result.important];
-    }
-}
-
-// todo 삭제 이벤트
-btnDelete.addEventListener('click', async function() {
-    // TODO: dialogue 창도 되면 만들자
-    // if(confirm('삭제하시겠습니까?')) {
-        let no = todoNo.dataset.no;
-        let chk = todoNo.dataset.chk;
-        const url = `http://127.0.0.1:8088/todo/delete.json`;
-        const body = {
-            no : no
-        };
-        const headers = {
-            "Content-Type" : "application/json"
-        };
-        const { data } = await axios.post(url, body, {headers});
-        if(data.status === 200) {
-            if(chk == 1) {
-                todoWithClass();
-            } else if (chk == 2) {
-                completeWithClass();
-            }
-            handleNoti('삭제되었습니다')
-            closeModal();
-        }
-    // }
-})
-
-// 모달창 끄기
-modal.addEventListener('click', function(e) {
-    if(e.target !== e.currentTarget) {
-        
-    } else {
-        closeModal();
-    }
-});
-
-// setTime으로 모달 닫기 animation용
-function closeModal() {
-    todoOne.style.animation = 'scaledown 0.3s';
-    setTimeout(() => {modal.style.display = 'none';}, 200);
-}
-
-// 우선순위 옵션 토글
-btnImportant.addEventListener('click', function() {
-    if(todoNo.dataset.chk === "1") {
-        optionList.classList.toggle('hide');
-    }
-});
-// 우선순위 버튼 외부 영역 누르면 꺼짐
-modal.addEventListener('click', function(e) {
-    if(!e.target.classList.contains('toggle-btn')&&
-    !e.target.classList.contains('selectbox-option')) {
-        optionList.classList.add('hide');
-    }
-});
-
-// 우선순위 수정
-optionList.addEventListener('click', async function(e) {
-    if(e.target !== e.currentTarget) {
-        let important = e.target.value;
-        console.log(important);
-        const url = `http://127.0.0.1:8088/todo/important.json`;
-        const body = {
-            no : todoNo.dataset.no,
-            important : important
-        };
-        const headers = {
-            "Content-Type" : "application/json"
-        };
-        const { data } = await axios.put(url, body, {headers});
-        if(data.status === 200) {
-            let arrImportant = ['없음', '낮음', '중간', '높음'];
-            btnImportant.innerText = '우선 순위 : ' + arrImportant[important];
-            // querySelector 로도 data- 에 접근할 수 있다
-            let important1 = document.querySelector(`.important[data-no='${todoNo.dataset.no}']`);
-            switch(important) {
-                case '3' : important1.innerText = '!!!'; important1.style.color = 'deeppink';break;
-                case '2' : important1.innerText = '!! '; important1.style.color = 'orangered'; break;
-                case '1' : important1.innerText = '!  '; important1.style.color = 'yellow';break;
-                default : important1.innerText = '   '; break;
-            }
-        }
-    }
-});
-
-// 메모 수정
-memo.addEventListener('focusout', async function(e) {
-    if(memo.innerText !== "") {
-        const memo = this.innerText;
-        console.log(memo);
-        const url = `http://127.0.0.1:8088/todo/memo.json`;
-        const body = {
-            no : todoNo.dataset.no,
-            memo : memo
-        };
-        const headers = {
-            "Content-Type" : "application/json"
-        };
-        const { data } = await axios.put(url, body, {headers});
-        if(data.status === 200) {
-            this.innerText = memo;
-        }
-    }
-});

@@ -51,23 +51,24 @@ function handleDate() {
 // FIXME: 이거 나중에 공부하고 바꿔야 할 듯
 // 정렬 버튼 => 모달창
 btnSort.addEventListener('click', function() {
-    listSort.style.display = 'block';
+    // listSort.style.display = 'block';
+    listSort.classList.toggle('list-sort-on');
     modalTransparent.style.display = 'block';
-    this.classList.add('options-add');
+    this.classList.toggle('options-add');
     modalTransparent.addEventListener('click', handleModal, {once :true});
 });
 // 정렬 모달창 모달창 닫기
 function handleModal(e) {
     console.log(e.target);
     this.style.display = 'none';
-    listSort.style.display = 'none';
+    // listSort.style.display = 'none';
+    listSort.classList.remove('list-sort-on');
     btnSort.classList.remove('options-add');
 };
 // 정렬 이벤트
 listSort.addEventListener('click', function(e) {
     if(e.target !== e.currentTarget) {
         console.log(e.target);
-        this.style.display = 'none';
         modalTransparent.style.display = 'none';
         btnSort.classList.remove('options-add');
         let regChar = e.target.innerText;
@@ -76,7 +77,9 @@ listSort.addEventListener('click', function(e) {
         handleData(select);
         // 이벤트 삭제 TODO: 이벤트 공부 많이 해야겠다
         modalTransparent.removeEventListener('click', handleModal);
-    }
+    };
+    listSort.classList.remove('list-sort-on');
+    btnSort.classList.remove('options-add');
 });
 
 

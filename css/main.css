@@ -1,8 +1,10 @@
-/* guide */
-    /* #f9f7e8 */
-    /* #63bfac */
-    /* #ff8fa4 */
-    /* #1f2247 */
+
+/* #f9f7e8 배경 */
+/* #63bfac 메인 */
+/* #ff8fa4 포인트 */
+/* #1f2247 텍스트 */
+/* #F2F3F5 텍스트필드 */
+/* #C0C4CC 플레이스홀더 */
 /* * {
     margin: 0;
     padding: 0;
@@ -22,12 +24,6 @@
     align-items: center;
     margin: 7px;
     animation: slide 0.3s ease-in-out;
-}
-.todo-list:hover .chk{
-    opacity: 1;
-}
-.todo-list:hover .todos {
-    background-color: white;
 }
 /* .todo-list:hover {
     transform: scale(1.05);
@@ -56,6 +52,9 @@
     height: 40px;
     text-overflow: ellipsis;
 }
+.todos:focus {
+    background-color: #F2F3F5;
+}
 
 /* .chk {
     position: relative;
@@ -71,16 +70,15 @@
 
 input[type="checkbox"] {
     position: relative;
+    background-color: transparent;
     left: 32px;
     width: 20px;
     height: 20px;
-    /* width: 1rem;
-    height: 1rem; */
     border-radius: 50%;
     border: 1.5px solid #63bfac;
     appearance: none;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.3s;
 }
 input[type="checkbox"]:hover {
     background-color: #63bfac;
