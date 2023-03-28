@@ -89,11 +89,10 @@
 
 /* 삭제 버튼 */
 #delete {
-    float: right;
     margin-top: 12px;
     text-align: center;
     padding-top: 7px;
-    width: 100px;
+    /* width: 100px; */
     height: 25px;
     color: #ff8fa4;
     border-radius: 4px;
@@ -118,6 +117,7 @@
     display: flex;
     justify-content: right;
     position: relative;
+    margin-top: 7px;
 }
 
 .toggle-btn {
@@ -143,12 +143,13 @@
 }
 .selectbox-option {
     position: absolute;
-    /* left: 62px; */
-    top: 35px;
-    height: 0;
+    left: 120px;
+    /* top: 0px;
+    height: 30px; */
+    display: flex;
+    justify-content: space-evenly;
     overflow: hidden;
-    width: 38px;
-    list-style: none;
+    width: 0px;
     border: 0;
     border-radius: 4px;
     background-color: white;
@@ -157,16 +158,19 @@
     transition: all 0.3s;
 }
 .selectbox-option-on {
-    height: 120px;
+    width: 280px;
 }
 
 .option-btn {
+    /* width: 100%; */
+    /* overflow-x: hidden; */
     width: inherit;
     line-height: 30px;
+    height: 30px;
     border: 0;
     background-color: transparent;
     border-radius: 4px;
-    z-index: 11;
+    z-index: 16;
 }
 .option-btn:hover {
     background-color: #63bfac;
@@ -178,6 +182,7 @@
 .day-box {
     display: flex;
     justify-content: left;
+    margin-top: 7px;
 }
 .days-btn {
     line-height: 30px;
@@ -189,32 +194,66 @@
 }
 .month-option {
     position: absolute;
-    left: 100px;
-    top: 35px;
+    left: 120px;
+    top: 30px;
     overflow: hidden;
-    width: 150px;
+    width: 140px;
     height: 0;
     border: 0;
     border-radius: 4px;
     background-color: white;
     color: #63bfac;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    z-index: 15;
-    transition: all 0.3s;
+    /* z-index: 2; */
+    transition: all 0.4s;
 }
 .month-option-on {
-    height: 120px;
+    height: 150px;
+    overflow-y: scroll;
+}
+.day-option {
+    position: absolute;
+    left: 260px;
+    top: 30px;
+    overflow: hidden;
+    width: 140px;
+    height: 0;
+    border: 0;
+    border-radius: 4px;
+    background-color: white;
+    color: #63bfac;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    /* z-index: 2; */
+    transition: all 0.4s;
+}
+.day-option-on {
+    height: 150px;
     overflow-y: scroll;
 }
 .month-btn {
-    width: 30px;
+    display: block;
+    width: 100%;
     line-height: 30px;
     border: 0;
-    background-color: red;
+    background-color: transparent;
     border-radius: 4px;
     z-index: 11;
 }
 .month-btn:hover {
+    background-color: #63bfac;
+    color: white;
+    cursor: pointer;
+}
+.day-btn {
+    display: block;
+    width: 100%;
+    line-height: 30px;
+    border: 0;
+    background-color: transparent;
+    border-radius: 4px;
+    z-index: 11;
+}
+.day-btn:hover {
     background-color: #63bfac;
     color: white;
     cursor: pointer;
@@ -230,13 +269,12 @@
 } */
 .daybox-option {
     position: absolute;
-    left: 100px;
+    left: 120px;
     /* height: 0; */
     display: flex;
     justify-content: right;
     overflow: hidden;
     width: 0px;
-    list-style: none;
     border: 0;
     border-radius: 4px;
     background-color: white;
@@ -245,7 +283,7 @@
     transition: all 0.3s;
 }
 .daybox-option-on {
-    width: 300px;
+    width: 280px;
 }
 .days-btn {
     width: inherit;

@@ -7,16 +7,17 @@ const todoNo = document.getElementById('todoNo');
 const btnImportant = document.getElementById('btnImportant');
 const optionList = document.querySelector('.selectbox-option');
 // 목표일 관련
+const goalOptionList = document.querySelector('.daybox-option');
 const btnGoal = document.getElementById('btnGoal');
 const btnMonth = document.getElementById('btnMonth');
-const goalOptionList = document.querySelector('.daybox-option');
 const btnDay = document.getElementById('btnDay');
 const monthList = document.querySelector('.month-option');
 const dayList = document.querySelector('.day-option');
+const dayBox = document.querySelector('.day-box');
 // 매모
 const memo = document.getElementById('memo');
 
-// makeDay();
+makeDay();
 
 function makeDay() {
     for(let i = 0; i < 31; i++) {
@@ -95,14 +96,45 @@ function closeModal() {
 btnMonth.addEventListener('mouseover', function() {
     if(todoNo.dataset.chk === '1') {
         monthList.classList.add('month-option-on');
-        console.log('hi');
+    }
+});
+monthList.addEventListener('mouseover', function() {
+    if(todoNo.dataset.chk === '1') {
+        monthList.classList.add('month-option-on');
+    }
+});
+monthList.addEventListener('mouseleave', function() {
+    if(todoNo.dataset.chk === '1') {
+        monthList.classList.remove('month-option-on');
     }
 });
 btnMonth.addEventListener('mouseleave', function() {
     if(todoNo.dataset.chk === '1') {
         monthList.classList.remove('month-option-on');
     }
-})
+});
+
+btnDay.addEventListener('mouseover', function() {
+    if(todoNo.dataset.chk === '1') {
+        dayList.classList.add('day-option-on');
+    }
+});
+dayList.addEventListener('mouseover', function() {
+    if(todoNo.dataset.chk === '1') {
+        dayList.classList.add('day-option-on');
+    }
+});
+dayList.addEventListener('mouseleave', function() {
+    if(todoNo.dataset.chk === '1') {
+        dayList.classList.remove('day-option-on');
+    }
+});
+btnDay.addEventListener('mouseleave', function() {
+    if(todoNo.dataset.chk === '1') {
+        dayList.classList.remove('day-option-on');
+    }
+});
+
 
 // 목표일 옵션 토글
 btnGoal.addEventListener('click', function() {
@@ -130,13 +162,19 @@ btnImportant.addEventListener('click', function() {
     }
 });
 // 우선순위 버튼 외부 영역 누르면 꺼짐
-modal.addEventListener('click', function(e) {
+todoOne.addEventListener('click', function(e) {
     if(!e.target.classList.contains('toggle-btn-on')&&
     !e.target.classList.contains('selectbox-option')) {
         optionList.classList.remove('selectbox-option-on');
         btnImportant.classList.remove('toggle-btn-on');
     }
-    if(!e.target.classList.contains('days-btn-on')&&
+    console.log(e.target);
+    console.log(e.currentTarget);
+    if(e.target.classList.contains('month-btn')) {
+        console.log('hi');
+    } else if(e.target.classList.contains('day-btn')) {
+        console.log('hello');
+    } else if(!e.target.classList.contains('days-btn-on')&&
     !e.target.classList.contains('daybox-option')) {
         goalOptionList.classList.remove('daybox-option-on');
         btnGoal.classList.remove('days-btn-on');
