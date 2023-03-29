@@ -17,10 +17,14 @@ const dayBox = document.querySelector('.day-box');
 // 매모
 const memo = document.getElementById('memo');
 
-makeDay();
-
-function makeDay() {
-    for(let i = 0; i < 31; i++) {
+makeDay(30);
+// 월에 따라서 일수 조정
+function makeDay(num) {
+    let count = dayList.childElementCount;
+    for(let i = 0; i < count; i++) {
+        dayList.firstChild.remove()
+    }
+    for(let i = 0; i < num; i++) {
         let day = document.createElement('button');
         day.innerText = i + 1;
         day.setAttribute('data-day', i+1);
@@ -50,13 +54,40 @@ async function handleSelectOneTodo(no) {
         memo.innerText = data.result.memo;
         let arrImportant = ['없음', '낮음', '중간', '높음'];
         btnImportant.innerText = '우선 순위 : ' + arrImportant[data.result.important];
-        if(data.result.day === '') {
-            btnGoal.innerText = '날짜 : 없음';
+        let day = data.result.day;
+        renderDay(day);
+    }
+}
+
+// todoOne 모달에서 날짜 버튼에 날짜 보여주는 방식
+function renderDay(val) {
+    if(val === '') {
+        btnGoal.innerText = '날짜 : 없음';
+    } else {
+        // 구분자로 잘라서 년, 월, 일 값을 배열로 담음
+        let arr = val.split('-');
+        // 구조분해 할당으로 월과 일을 각각 month, day 라는 변수에 담음
+        let [_, month, day] = arr;
+        // 한자리 월과 일의 앞의 0을 제거하고 변수에 담음
+        let month1 = '';
+        let day1 = '';
+        if(month[0] == 0) {
+            month1 = month.slice(1);
         } else {
-            // FIXME: 나중에 xx면 안보이게 하기
-            let arr = data.result.day.split('-');
-            // if(arr[1] === 'xx')
-            btnGoal.innerText = `날짜 : ${arr[1]}월 ${arr[2]}일`;
+            month1 = month;
+        }
+        if(day[0] == 0) {
+            day1 = day.slice(1);
+        } else {
+            day1 = day;
+        }
+        // 월과 일에 초기 값 : xx 일때 빼고 출력
+        if(day === 'xx') {
+            btnGoal.innerText = `날짜 : ${month1}월`;
+        } else if(month == 'xx') {
+            btnGoal.innerText = `날짜 : ${day1}일`;
+        } else {
+            btnGoal.innerText = `날짜 : ${month1}월 ${day1}일`;
         }
     }
 }
@@ -64,7 +95,7 @@ async function handleSelectOneTodo(no) {
 // todo 삭제 이벤트
 btnDelete.addEventListener('click', async function() {
     // TODO: dialogue 창도 되면 만들자
-    // if(confirm('삭제하시겠습니까?')) {
+    if(confirm('삭제하시겠습니까?')) {
         let no = todoNo.dataset.no;
         let chk = todoNo.dataset.chk;
         const url = `http://127.0.0.1:8088/todo/delete.json`;
@@ -84,7 +115,7 @@ btnDelete.addEventListener('click', async function() {
             handleNoti('삭제되었습니다');
             closeModal();
         }
-    // }
+    }
 })
 
 // 모달창 끄기
@@ -106,7 +137,11 @@ function closeModal() {
 monthList.addEventListener('click', async function(e) {
     if(e.target !== e.currentTarget) {
         let month = e.target.dataset.month;
-
+        // 월별로 일수 동적으로 생성 FIXME: 좀더 단순하게 만들 수 있을 듯
+        let cnt = e.target.dataset.cnt;
+        makeDay(cnt);
+        // FIXME: 이제 일수랑 월이랑 비교해서 일수가 초과하면 마지막 일수로 바꾸던지
+        
         const url = `http://127.0.0.1:8088/todo/updatemonth.json`;
         const headers = {
             "Content-Type":"application/json"
@@ -117,14 +152,10 @@ monthList.addEventListener('click', async function(e) {
         };
         const { data } = await axios.put(url, body, {headers});
         if(data.status === 200) {
-            let month1 = "";
-            if(month[0] == 0) {
-                month1 = month.slice(1);
-            } else {
-                month1 = month;
-            }
             console.log(data.result);
-            btnGoal.innerText = '날짜 : ' + month1;
+            renderDay(data.result.day);
+            monthList.classList.remove('month-option-on');
+            console.log(btnGoal.innerText.slice(-3));
         }
     }
 });
@@ -132,8 +163,26 @@ monthList.addEventListener('click', async function(e) {
 // 날짜 일 바꾸기
 dayList.addEventListener('click', async function(e) {
     if(e.target !== e.currentTarget) {
+        let findWord = '월';
+        if(!btnGoal.innerText.includes(findWord)) {
+            handleNoti('먼저 월을 선택해주세요');
+            return;
+        }
         let day = e.target.dataset.day;
-        console.log(day);
+        const url = `http://127.0.0.1:8088/todo/updateday.json`;
+        const headers = {
+            "Content-Type":"application/json"
+        };
+        const body = {
+            no : todoNo.dataset.no,
+            day : day
+        };
+        const { data } = await axios.put(url, body, {headers});
+        if(data.status === 200) {
+            console.log(data.result);
+            renderDay(data.result.day);
+            dayList.classList.remove('day-option-on');
+        }
     }
 })
 

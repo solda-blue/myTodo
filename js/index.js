@@ -104,8 +104,9 @@ async function DeleteAllCompleted() {
     }
 }
 
-// 삭제 알림
+// 노티 함수
 function handleNoti(text, type) {
+    // type을 지정해서 원하는 아이콘을 띄워 줄 수 있다
     if(type == null) {
         type = 0;
     }
@@ -119,7 +120,7 @@ function handleNoti(text, type) {
     let message = document.createElement('span');
     let noti = document.createElement('div');
     icon.setAttribute('src',types[type].icon);
-    message.style = `padding-left : 10px;`;
+    message.style = `padding : 0 10px;`;
     message.innerText = text;
     noti.appendChild(icon);
     noti.appendChild(message);

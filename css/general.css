@@ -209,6 +209,7 @@ body {
     display: flex;
     justify-content: center;
     animation: Noti 3s ease-in-out;
+    z-index: 100;
 }
 .noti {
     background-color: white;
