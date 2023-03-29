@@ -27,7 +27,11 @@ function makeDay(num) {
     for(let i = 0; i < num; i++) {
         let day = document.createElement('button');
         day.innerText = i + 1;
-        day.setAttribute('data-day', i+1);
+        if(i < 9) {
+            day.setAttribute('data-day', '0' + (i+1));
+        } else {
+            day.setAttribute('data-day', i+1);
+        }
         day.classList.add('day-btn');
         dayList.appendChild(day);
     }
@@ -55,7 +59,11 @@ async function handleSelectOneTodo(no) {
         let arrImportant = ['없음', '낮음', '중간', '높음'];
         btnImportant.innerText = '우선 순위 : ' + arrImportant[data.result.important];
         let day = data.result.day;
+        let count = day.slice(-5, -3);
+        // 처음 렌더링 될 때 현재 설정된 월에 따라서 카운트
         renderDay(day);
+        let child = monthList.children[count-1].dataset.cnt;
+        makeDay(child);
     }
 }
 
@@ -155,7 +163,11 @@ monthList.addEventListener('click', async function(e) {
             console.log(data.result);
             renderDay(data.result.day);
             monthList.classList.remove('month-option-on');
-            console.log(btnGoal.innerText.slice(-3));
+            let day = data.result.day.slice(-2);
+            console.log(day);
+            if(day > cnt) {
+                handleUpdateDay(cnt);
+            }
         }
     }
 });
@@ -163,28 +175,33 @@ monthList.addEventListener('click', async function(e) {
 // 날짜 일 바꾸기
 dayList.addEventListener('click', async function(e) {
     if(e.target !== e.currentTarget) {
-        let findWord = '월';
-        if(!btnGoal.innerText.includes(findWord)) {
-            handleNoti('먼저 월을 선택해주세요');
-            return;
-        }
-        let day = e.target.dataset.day;
-        const url = `http://127.0.0.1:8088/todo/updateday.json`;
-        const headers = {
-            "Content-Type":"application/json"
-        };
-        const body = {
-            no : todoNo.dataset.no,
-            day : day
-        };
-        const { data } = await axios.put(url, body, {headers});
-        if(data.status === 200) {
-            console.log(data.result);
-            renderDay(data.result.day);
-            dayList.classList.remove('day-option-on');
-        }
+        handleUpdateDay(e.target.dataset.day);
     }
-})
+});
+
+// todo 목표일 일자 수정
+async function handleUpdateDay(day) {
+    let findWord = '월';
+    if(!btnGoal.innerText.includes(findWord)) {
+        handleNoti('먼저 월을 선택해주세요');
+        return;
+    }
+    // let day = el.dataset.day;
+    const url = `http://127.0.0.1:8088/todo/updateday.json`;
+    const headers = {
+        "Content-Type":"application/json"
+    };
+    const body = {
+        no : todoNo.dataset.no,
+        day : day
+    };
+    const { data } = await axios.put(url, body, {headers});
+    if(data.status === 200) {
+        console.log(data.result);
+        renderDay(data.result.day);
+        dayList.classList.remove('day-option-on');
+    }
+}
 
 btnMonth.addEventListener('mouseover', function() {
     if(todoNo.dataset.chk === '1') {
@@ -264,9 +281,9 @@ todoOne.addEventListener('click', function(e) {
     // console.log(e.target);
     // console.log(e.currentTarget);
     if(e.target.classList.contains('month-btn')) {
-        console.log('hi');
+        console.log('monthBtn');
     } else if(e.target.classList.contains('day-btn')) {
-        console.log('hello');
+        console.log('dayBtn');
     } else if(!e.target.classList.contains('days-btn-on')&&
     !e.target.classList.contains('daybox-option')) {
         goalOptionList.classList.remove('daybox-option-on');
