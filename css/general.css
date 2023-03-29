@@ -1,13 +1,15 @@
-/* #f9f7e8 배경 */
-/* #63bfac 메인 */
-/* #ff8fa4 포인트 */
-/* #1f2247 텍스트 */
-/* #F2F3F5 텍스트필드 */
-/* #C0C4CC 플레이스홀더 */
+:root {
+    --color-main: #63bfac;
+    --color-background: #f9f7e8;
+    --color-point1: #ff8fa4;
+    --color-text: #1f2247;
+    --color-text-field: #F2F3F5;
+    --color-placeholder: #C0C4CC;
+    --shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
 * {
     margin: 0;
     padding: 0;
-    /* color: #1f2247; */
 }
 body {
     /* x를 hidden을 주면 강제로 여백을 없앨 수 있다 */
@@ -15,7 +17,7 @@ body {
     overflow-y: auto;
 }
 .container {
-    background: #f9f7e8;
+    background: var(--color-background);
     min-width: 620px;
 }
 .input-box {
@@ -25,7 +27,7 @@ body {
     position: relative;
 }
 #todo:focus {
-    background-color: #F2F3F5;
+    background-color: var(--color-text-field);
 }
 .icon-write {
     position: absolute;
@@ -34,9 +36,8 @@ body {
     width: 500px;
 } */
 .input {
-    color: #1f2247;
+    color: var(--color-text);
     background-color: white;
-    /* color: #303133; */
     height: 50px;
     width: 500px;
     padding-left: 47px;
@@ -46,7 +47,11 @@ body {
     border-radius: 25px;
     font-size: 1.2rem;
     overflow: auto;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
+}
+input::placeholder {
+    color: var(--color-placeholder);
+    font-size: 0.95rem;
 }
 
 .material-symbols-outlined {
@@ -67,7 +72,7 @@ body {
 .date {
     display: flex;
     justify-content: right;
-    color: #63bfac;
+    color: var(--color-main);
 }
 .week {
     font-size: 42px;
@@ -89,7 +94,7 @@ body {
     padding-left: 32px;
     display: flex;
     justify-content: center;
-    color: #C0C4CC;
+    color: var(--color-placeholder);
     font-size: 1.1rem;
     font-weight: bold;
 }
@@ -97,13 +102,13 @@ body {
     position: absolute;
     top: 22px;
     background-color: transparent;
-    border-bottom: 3px #63bfac solid;
+    border-bottom: 3px var(--color-main) solid;
     transition: all 0.3s ease-in-out;
     z-index: 10px;
 }
 .on {
     font-weight: bold;
-    color: #63bfac;
+    color: var(--color-main);
 }
 .btn-count {
     padding: 0 5px;
@@ -111,7 +116,7 @@ body {
 
 .btn-count:hover {
     cursor: pointer;
-    color: #63bfac;
+    color: var(--color-main);
     transition: all 0.3s;
 }
 .btn-count:active {
@@ -126,7 +131,7 @@ body {
     margin-bottom: 5px;
     width: 575px;
     justify-content: right;
-    color: #63bfac;
+    color: var(--color-main);
     position: relative;
 }
 .options {
@@ -137,21 +142,21 @@ body {
 .options:hover {
     color: white;
     cursor: pointer;
-    background-color: #63bfac;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: var(--color-main);
+    box-shadow: var(--shadow);
     transition: all 0.3s;
 }
 .options-add {
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
 }
 /* 전체 삭제 전용 색 */
 .delete-opt {
-    color: #ff8fa4;
+    color: var(--color-point1);
 }
 .delete-opt:hover {
-    background-color: #ff8fa4;
+    background-color: var(--color-point1);
     color: white;
 }
 .icon-arrow-drop-down {
@@ -169,13 +174,13 @@ body {
     width: 73.5px;
     border-radius: 4px;
     background-color: white;
-    color: #63bfac;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    color: var(--color-main);
+    box-shadow: var(--shadow);
     z-index: 12;
     transition: all 0.3s;
 }
 .list-sort-on {
-    height: 285%;
+    height: 118px;
 }
 .list-sort p {
     padding: 5px;
@@ -183,7 +188,7 @@ body {
 .list-sort p:hover {
     cursor: pointer;
     border-radius: 4px;
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
 }
 
@@ -217,7 +222,7 @@ body {
     border-radius: 25px;
     display: flex;
     align-items: center;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
 }
 /* 들어갔다 나오는 애니메이션 */
 @keyframes Noti {

@@ -14,10 +14,9 @@ const btnDay = document.getElementById('btnDay');
 const monthList = document.querySelector('.month-option');
 const dayList = document.querySelector('.day-option');
 const dayBox = document.querySelector('.day-box');
-// 매모
+// 메모
 const memo = document.getElementById('memo');
 
-makeDay(30);
 // 월에 따라서 일수 조정
 function makeDay(num) {
     let count = dayList.childElementCount;
@@ -59,26 +58,31 @@ async function handleSelectOneTodo(no) {
         let arrImportant = ['없음', '낮음', '중간', '높음'];
         btnImportant.innerText = '우선 순위 : ' + arrImportant[data.result.important];
         let day = data.result.day;
-        let count = day.slice(-5, -3);
-        // 처음 렌더링 될 때 현재 설정된 월에 따라서 카운트
         renderDay(day);
-        let child = monthList.children[count-1].dataset.cnt;
-        makeDay(child);
+
+        if(data.result.day !== '' && data.result.day !== '없음') {
+            // 처음 렌더링 될 때 현재 설정된 월에 따라서 카운트
+            let count = day.slice(-5, -3);
+            let child = monthList.children[count-1].dataset.cnt;
+            makeDay(child);
+        } else {
+            makeDay(31);
+        }
     }
 }
 
 // todoOne 모달에서 날짜 버튼에 날짜 보여주는 방식
 function renderDay(val) {
-    if(val === '') {
+    if(val === '없음' || val === '') {
         btnGoal.innerText = '날짜 : 없음';
     } else {
         // 구분자로 잘라서 년, 월, 일 값을 배열로 담음
         let arr = val.split('-');
         // 구조분해 할당으로 월과 일을 각각 month, day 라는 변수에 담음
         let [_, month, day] = arr;
-        // 한자리 월과 일의 앞의 0을 제거하고 변수에 담음
         let month1 = '';
         let day1 = '';
+        // 한자리 월과 일의 앞의 0을 제거하고 변수에 담음
         if(month[0] == 0) {
             month1 = month.slice(1);
         } else {
@@ -98,7 +102,7 @@ function renderDay(val) {
             btnGoal.innerText = `날짜 : ${month1}월 ${day1}일`;
         }
     }
-}
+};
 
 // todo 삭제 이벤트
 btnDelete.addEventListener('click', async function() {
@@ -131,6 +135,10 @@ modal.addEventListener('click', function(e) {
     if(e.target !== e.currentTarget) {
         
     } else {
+        btnGoal.classList.remove('days-btn-on');
+        btnImportant.classList.remove('toggle-btn-on');
+        goalOptionList.classList.remove('daybox-option-on');
+        optionList.classList.remove('selectbox-option-on');
         closeModal();
     }
 });
@@ -148,7 +156,6 @@ monthList.addEventListener('click', async function(e) {
         // 월별로 일수 동적으로 생성 FIXME: 좀더 단순하게 만들 수 있을 듯
         let cnt = e.target.dataset.cnt;
         makeDay(cnt);
-        // FIXME: 이제 일수랑 월이랑 비교해서 일수가 초과하면 마지막 일수로 바꾸던지
         
         const url = `http://127.0.0.1:8088/todo/updatemonth.json`;
         const headers = {
@@ -161,13 +168,20 @@ monthList.addEventListener('click', async function(e) {
         const { data } = await axios.put(url, body, {headers});
         if(data.status === 200) {
             console.log(data.result);
-            renderDay(data.result.day);
-            monthList.classList.remove('month-option-on');
             let day = data.result.day.slice(-2);
-            console.log(day);
-            if(day > cnt) {
-                handleUpdateDay(cnt);
+            // 아직 일수가 정해져있지 않을 땐 월만 그린다
+            if(day.includes('xx')) {
+                console.log('신규');
+                renderDay(data.result.day);
+            } else {
+                // 미리 설정한 일수가 새로 바꾼 달의 일수보다 많을 때 그 달의 제일 마지막 일로 다시 저장
+                if(day > cnt) {
+                    handleUpdateDay(cnt);
+                } else {
+                    renderDay(data.result.day);
+                }
             }
+            monthList.classList.remove('month-option-on');
         }
     }
 });
@@ -180,10 +194,11 @@ dayList.addEventListener('click', async function(e) {
 });
 
 // todo 목표일 일자 수정
+// 인자로 해당 버튼의 dataset 값을 받아와서 화면을 그려줌
 async function handleUpdateDay(day) {
     let findWord = '월';
     if(!btnGoal.innerText.includes(findWord)) {
-        handleNoti('먼저 월을 선택해주세요');
+        handleNoti('월을 선택해주세요');
         return;
     }
     // let day = el.dataset.day;

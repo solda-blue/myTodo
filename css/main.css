@@ -1,13 +1,3 @@
-/* #f9f7e8 배경 */
-/* #63bfac 메인 */
-/* #ff8fa4 포인트 */
-/* #1f2247 텍스트 */
-/* #F2F3F5 텍스트필드 */
-/* #C0C4CC 플레이스홀더 */
-/* * {
-    margin: 0;
-    padding: 0;
-} */
 /* list 나오는 곳 */
 .main {
     min-height: 600px;
@@ -39,7 +29,7 @@
     }
 }
 .important {
-    color: #ff8fa4;
+    color: var(--color-point1);
     position: absolute;
     left:55px;
     top: 11px;
@@ -52,7 +42,7 @@
     text-overflow: ellipsis;
 }
 .todos:focus {
-    background-color: #F2F3F5;
+    background-color: var(--color-text-field);
 }
 
 /* .chk {
@@ -74,17 +64,17 @@ input[type="checkbox"] {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1.5px solid #63bfac;
+    border: 1.5px solid var(--color-main);
     appearance: none;
     cursor: pointer;
     transition: background 0.3s;
 }
 input[type="checkbox"]:hover {
-    background-color: #63bfac;
+    background-color: var(--color-main);
 }
 
 input[type="checkbox"]:checked {
-    background: #f9f7e8;
+    background: var(--color-background);
     border: none;
 }
 
@@ -113,28 +103,28 @@ input[type="checkbox"]:checked {
     animation: changecolor 1.5s ease-in;
 }
 @keyframes changecolor {
-    0%   {background : linear-gradient( 90deg, #63bfac 0% 0%, white 0% 100%)}
-    0.5% {background : linear-gradient( 90deg, #63bfac 0% 5%, white 0% 100%)}
-    1%   {background : linear-gradient( 90deg, #63bfac 0% 10%, white 0% 100%)}
-    1.5% {background : linear-gradient( 90deg, #63bfac 0% 15%, white 0% 100%)}
-    2%   {background : linear-gradient( 90deg, #63bfac 0% 20%, white 0% 100%)}
-    2.5% {background : linear-gradient( 90deg, #63bfac 0% 25%, white 0% 100%)}
-    3%   {background : linear-gradient( 90deg, #63bfac 0% 30%, white 0% 100%)}
-    3.5% {background : linear-gradient( 90deg, #63bfac 0% 35%, white 0% 100%)}
-    4%   {background : linear-gradient( 90deg, #63bfac 0% 40%, white 0% 100%)}
-    4.5% {background : linear-gradient( 90deg, #63bfac 0% 45%, white 0% 100%)}
-    5%   {background : linear-gradient( 90deg, #63bfac 0% 50%, white 0% 100%)}
-    5.5% {background : linear-gradient( 90deg, #63bfac 0% 55%, white 0% 100%)}
-    6%   {background : linear-gradient( 90deg, #63bfac 0% 60%, white 0% 100%)}
-    6.5% {background : linear-gradient( 90deg, #63bfac 0% 65%, white 0% 100%)}
-    7%   {background : linear-gradient( 90deg, #63bfac 0% 70%, white 0% 100%)}
-    7.5% {background : linear-gradient( 90deg, #63bfac 0% 75%, white 0% 100%)}
-    8%   {background : linear-gradient( 90deg, #63bfac 0% 80%, white 0% 100%)}
-    8.5% {background : linear-gradient( 90deg, #63bfac 0% 85%, white 0% 100%)}
-    9%   {background : linear-gradient( 90deg, #63bfac 0% 90%, white 0% 100%)}
-    9.5% {background : linear-gradient( 90deg, #63bfac 0% 95%, white 0% 100%)}
-    10%  {background : linear-gradient( 90deg, #63bfac 0% 100%, white 0% 100%)}
-    100% {background : linear-gradient( 90deg, #63bfac 0% 100%, white 0% 100%)}
+    0%   {background : linear-gradient( 90deg, var(--color-main) 0% 0%, white 0% 100%)}
+    0.5% {background : linear-gradient( 90deg, var(--color-main) 0% 5%, white 0% 100%)}
+    1%   {background : linear-gradient( 90deg, var(--color-main) 0% 10%, white 0% 100%)}
+    1.5% {background : linear-gradient( 90deg, var(--color-main) 0% 15%, white 0% 100%)}
+    2%   {background : linear-gradient( 90deg, var(--color-main) 0% 20%, white 0% 100%)}
+    2.5% {background : linear-gradient( 90deg, var(--color-main) 0% 25%, white 0% 100%)}
+    3%   {background : linear-gradient( 90deg, var(--color-main) 0% 30%, white 0% 100%)}
+    3.5% {background : linear-gradient( 90deg, var(--color-main) 0% 35%, white 0% 100%)}
+    4%   {background : linear-gradient( 90deg, var(--color-main) 0% 40%, white 0% 100%)}
+    4.5% {background : linear-gradient( 90deg, var(--color-main) 0% 45%, white 0% 100%)}
+    5%   {background : linear-gradient( 90deg, var(--color-main) 0% 50%, white 0% 100%)}
+    5.5% {background : linear-gradient( 90deg, var(--color-main) 0% 55%, white 0% 100%)}
+    6%   {background : linear-gradient( 90deg, var(--color-main) 0% 60%, white 0% 100%)}
+    6.5% {background : linear-gradient( 90deg, var(--color-main) 0% 65%, white 0% 100%)}
+    7%   {background : linear-gradient( 90deg, var(--color-main) 0% 70%, white 0% 100%)}
+    7.5% {background : linear-gradient( 90deg, var(--color-main) 0% 75%, white 0% 100%)}
+    8%   {background : linear-gradient( 90deg, var(--color-main) 0% 80%, white 0% 100%)}
+    8.5% {background : linear-gradient( 90deg, var(--color-main) 0% 85%, white 0% 100%)}
+    9%   {background : linear-gradient( 90deg, var(--color-main) 0% 90%, white 0% 100%)}
+    9.5% {background : linear-gradient( 90deg, var(--color-main) 0% 95%, white 0% 100%)}
+    10%  {background : linear-gradient( 90deg, var(--color-main) 0% 100%, white 0% 100%)}
+    100% {background : linear-gradient( 90deg, var(--color-main) 0% 100%, white 0% 100%)}
 }
 /* 완료시 퇴장 애니메이션 */
 .complete {

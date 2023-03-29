@@ -1,10 +1,3 @@
-/* #f9f7e8 배경 */
-/* #63bfac 메인 */
-/* #ff8fa4 포인트 */
-/* #1f2247 텍스트 */
-/* #F2F3F5 텍스트필드 */
-/* #C0C4CC 플레이스홀더 */
-
 /* 수평줄 */
 .horizontal-box {
     width: 100%;
@@ -14,7 +7,7 @@
 }
 .horizontal {
     width: 100%;
-    border-top: 2px #63bfac solid;
+    border-top: 2px var(--color-main) solid;
 }
 
 /* todoOne 모달 */
@@ -34,12 +27,12 @@
     position: absolute;
     width: 400px;
     padding: 1.5rem;
-    background-color: #f9f7e8;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: var(--color-background);
+    box-shadow: var(--shadow);
     border-radius: 12px;
     z-index: 10;
     top: 22.5%;
-    color: #1f2247;
+    color: var(--color-text);
     /* animation: scaleup 0.25s; */
 }
 /* 모달창 확대 애니메이션 */
@@ -66,7 +59,7 @@
 /* memo div에 placeholder 만들기 */
 [contenteditable=true]:empty:before{
     content: attr(placeholder);
-    color: #C0C4CC;
+    color: var(--color-placeholder);
     display: block; /* For Firefox */
 }
 #memo {
@@ -83,7 +76,7 @@
     border-radius: 5px; */
 }
 #memo:focus {
-    background-color: #F2F3F5;
+    background-color: var(--color-text-field);
     border-radius: 4px;
 }
 
@@ -94,15 +87,15 @@
     padding-top: 7px;
     /* width: 100px; */
     height: 25px;
-    color: #ff8fa4;
+    color: var(--color-point1);
     border-radius: 4px;
 }
 #delete:hover {
     cursor: pointer;
-    background-color: #ff8fa4;
+    background-color: var(--color-point1);
     color: white;
     font-weight: 500;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
     transition: all 0.3s;
 }
 
@@ -127,18 +120,18 @@
     border: 0;
     border-radius: 4px;
     background-color: transparent;
-    color: #63bfac;
+    color: var(--color-main);
 }
 .toggle-btn-on {
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
 }
 .toggle-btn:hover {
     cursor: pointer;
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
     transition: all 0.3s;
 }
 .selectbox-option {
@@ -153,8 +146,8 @@
     border: 0;
     border-radius: 4px;
     background-color: white;
-    color: #63bfac;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    color: var(--color-main);
+    box-shadow: var(--shadow);
     transition: all 0.3s;
 }
 .selectbox-option-on {
@@ -173,7 +166,7 @@
     z-index: 16;
 }
 .option-btn:hover {
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
     cursor: pointer;
 }
@@ -190,7 +183,7 @@
     border: 0;
     border-radius: 4px;
     background-color: transparent;
-    color: #63bfac;
+    color: var(--color-main);
 }
 .month-option {
     position: absolute;
@@ -202,8 +195,8 @@
     border: 0;
     border-radius: 4px;
     background-color: white;
-    color: #63bfac;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    color: var(--color-main);
+    box-shadow: var(--shadow);
     /* z-index: 2; */
     transition: all 0.4s;
 }
@@ -221,8 +214,8 @@
     border: 0;
     border-radius: 4px;
     background-color: white;
-    color: #63bfac;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    color: var(--color-main);
+    box-shadow: var(--shadow);
     /* z-index: 2; */
     transition: all 0.4s;
 }
@@ -240,7 +233,7 @@
     z-index: 11;
 }
 .month-btn:hover {
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
     cursor: pointer;
 }
@@ -254,7 +247,7 @@
     z-index: 11;
 }
 .day-btn:hover {
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
     cursor: pointer;
 }
@@ -278,8 +271,8 @@
     border: 0;
     border-radius: 4px;
     background-color: white;
-    color: #63bfac;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    color: var(--color-main);
+    box-shadow: var(--shadow);
     transition: all 0.3s;
 }
 .daybox-option-on {
@@ -294,16 +287,16 @@
     z-index: 11;
 }
 .days-btn:hover {
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
 }
 .days-btn-on {
-    background-color: #63bfac;
+    background-color: var(--color-main);
     color: white;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: var(--shadow);
 }
 
 /* select 같은 모달용 */

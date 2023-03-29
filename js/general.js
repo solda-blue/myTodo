@@ -89,6 +89,24 @@ function updateTitleFocus() {
     this.removeEventListener('focusout', updateTitleFocus);
 }
 
+// FIXME: put 이벤트 추가하기
+async function handleUpdate(no, title) {
+    const url = `http://127.0.0.1:8088/todo/update.json`;
+    const headers = {
+        "Content-Type" : "application/json"
+    };
+    const body = {
+        no : no,
+        title : title
+    };
+    const { data } = await axios.put(url, body, {headers});
+    if(data.status === 200) {
+        // handleData(select);
+        handleNoti('수정되었습니다');
+    }
+    console.log(data);
+}
+
 // 완료 에니메이션 위주
 function handleComplete(el) {
     let no = el.firstChild.dataset.no;
@@ -119,24 +137,6 @@ async function handlePutCheck(no) {
         console.log(data);
         handleCount();
     }
-}
-
-// FIXME: put 이벤트 추가하기
-async function handleUpdate(no, title) {
-    const url = `http://127.0.0.1:8088/todo/update.json`;
-    const headers = {
-        "Content-Type" : "application/json"
-    };
-    const body = {
-        no : no,
-        title : title
-    };
-    const { data } = await axios.put(url, body, {headers});
-    if(data.status === 200) {
-        // handleData(select);
-        handleNoti('수정되었습니다');
-    }
-    console.log(data);
 }
 
 // todo 목록 가져오기
@@ -309,7 +309,7 @@ async function handleCount() {
     }
 }
 
-// todo insert
+// todo 추가
 todo.addEventListener('keydown', ({ key, isComposing }) => {
     if (isComposing) {
       return
@@ -321,9 +321,8 @@ todo.addEventListener('keydown', ({ key, isComposing }) => {
     handleInsert();
 });
 
-todo.addEventListener('focusout', () => {
-    todo.value = "";
-});
+// todo input 포커스아웃 시 안의 값 다 지우기
+todo.addEventListener('focusout', () => {todo.value = "";});
 
 // todo insert request
 const handleInsert = async () => {
