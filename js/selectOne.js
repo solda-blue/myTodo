@@ -231,17 +231,19 @@ async function handleUpdateDay(day) {
     if(data.status === 200) {
         console.log(data.result);
         renderDay(data.result.day);
-        dayList.classList.remove('day-option-on');
         handleSelectOneTodo(todoNo.dataset.no);
         goalOptionList.classList.remove('daybox-option-on');
-        dayList.classList.remove('day-option-on');
         let tag = document.querySelector(`.todo-list[data-no='${todoNo.dataset.no}']`);
         // 여기서 말하는 태그는 todolist 그 자체를 말한다 
         if(tag.childElementCount > 4) {
             tag.lastElementChild.remove();
             console.log('태그 삭제함')
         }
+        btnGoal.classList.remove('days-btn-on');
+        // FIXME: 날짜 div 안보이게 해야함 
+        // dayList.style.height = 0;
         makeDayTag(data.result, tag);
+        dayList.classList.remove('day-option-on');
     }
 }
 // 목표일 삭제
@@ -254,6 +256,11 @@ async function handleDeleteDay() {
     const { data } = await axios.put(url, body, {headers});
     if(data.status === 200) {
         console.log(data.result);
+        let tag = document.querySelector(`.todo-list[data-no='${todoNo.dataset.no}']`);
+        if(tag.childElementCount > 4) {
+            tag.lastElementChild.remove();
+            console.log('태그 삭제함')
+        }
         handleSelectOneTodo(no);
     }
 }
