@@ -218,7 +218,7 @@ function makeDayTag(result, el) {
             // let alert = document.createElement('div');
             alert.classList.add('alert-goal');
             alert.classList.add('alert-late');
-            alert.innerText = 'late';
+            alert.innerText = 'passed';
             // el.appendChild(alert);
         } else {
             // let alert = document.createElement('div');

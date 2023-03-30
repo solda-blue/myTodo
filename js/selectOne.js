@@ -19,6 +19,8 @@ const btnGoalDelete = document.getElementById('btnGoalDelete');
 // 메모
 const memo = document.getElementById('memo');
 
+let cheat = false;
+
 // 월에 따라서 일수 조정
 function makeDay(num) {
     let count = dayList.childElementCount;
@@ -229,6 +231,8 @@ async function handleUpdateDay(day) {
     };
     const { data } = await axios.put(url, body, {headers});
     if(data.status === 200) {
+        dayList.classList.remove('day-option-on');
+        cheat = true;
         console.log(data.result);
         renderDay(data.result.day);
         handleSelectOneTodo(todoNo.dataset.no);
@@ -240,10 +244,9 @@ async function handleUpdateDay(day) {
             console.log('태그 삭제함')
         }
         btnGoal.classList.remove('days-btn-on');
-        // FIXME: 날짜 div 안보이게 해야함 
-        // dayList.style.height = 0;
+        // FIXME: 날짜 div 안보이게 해야함 => 일단 편법으로 해결 
         makeDayTag(data.result, tag);
-        dayList.classList.remove('day-option-on');
+        setTimeout(() => cheat = false, 300);
     }
 }
 // 목표일 삭제
@@ -263,50 +266,39 @@ async function handleDeleteDay() {
         }
         handleSelectOneTodo(no);
     }
+};
+
+// 월, 일 리스트 렌더링 함수
+function renderList(el, className) {
+    if(todoNo.dataset.chk === '1') {
+        el.classList.add(className);
+    }
+}
+// 월, 일 리무브 렌더링 함수
+function removeList(el, className) {
+    if(todoNo.dataset.chk === '1') {
+        el.classList.remove(className);
+    }
 }
 
-// FIXME: 여기부분 간략하게
-btnMonth.addEventListener('mouseover', function() {
-    if(todoNo.dataset.chk === '1') {
-        monthList.classList.add('month-option-on');
-    }
-});
-monthList.addEventListener('mouseover', function() {
-    if(todoNo.dataset.chk === '1') {
-        monthList.classList.add('month-option-on');
-    }
-});
-monthList.addEventListener('mouseleave', function() {
-    if(todoNo.dataset.chk === '1') {
-        monthList.classList.remove('month-option-on');
-    }
-});
-btnMonth.addEventListener('mouseleave', function() {
-    if(todoNo.dataset.chk === '1') {
-        monthList.classList.remove('month-option-on');
+// 버튼들 한번에 관리하기
+btnMonth.addEventListener('mouseover', function() {renderList(monthList, 'month-option-on')});
+monthList.addEventListener('mouseover', function() {renderList(monthList, 'month-option-on')});
+btnDay.addEventListener('mouseover', function() {renderList(dayList, 'day-option-on')});
+// day리스트 닫힐 때 편법으로 딜레이 걸기 TODO: 근데 이거 좀더 생각해보면 다른 곳에도 좋게 적용할 수 있을 듯?
+dayList.addEventListener('mouseover', function() {
+    if(!cheat) {
+        renderList(dayList, 'day-option-on');
+    } else if (cheat) {
+        removeList(dayList, 'day-option-on');
     }
 });
 
-btnDay.addEventListener('mouseover', function() {
-    if(todoNo.dataset.chk === '1') {
-        dayList.classList.add('day-option-on');
-    }
-});
-dayList.addEventListener('mouseover', function() {
-    if(todoNo.dataset.chk === '1') {
-        dayList.classList.add('day-option-on');
-    }
-});
-dayList.addEventListener('mouseleave', function() {
-    if(todoNo.dataset.chk === '1') {
-        dayList.classList.remove('day-option-on');
-    }
-});
-btnDay.addEventListener('mouseleave', function() {
-    if(todoNo.dataset.chk === '1') {
-        dayList.classList.remove('day-option-on');
-    }
-});
+monthList.addEventListener('mouseleave', function() {removeList(monthList, 'month-option-on')});
+btnMonth.addEventListener('mouseleave', function() {removeList(monthList, 'month-option-on')});
+dayList.addEventListener('mouseleave', function() {removeList(dayList, 'day-option-on')});
+btnDay.addEventListener('mouseleave', function() {removeList(dayList, 'day-option-on')});
+
 
 // 삭제버튼 hover시에도 goal 버튼 하이라이트 적용
 btnGoalDelete.addEventListener('mouseover', function() {
