@@ -27,16 +27,16 @@
         </div>
         <div id="option-box">
             <div id="countSort" class="options active">
-                <span>정렬 : 최근순</span>
+                <span>정렬 : 등록순</span>
                 <span class="material-symbols-outlined icon-arrow-drop-down">
                     arrow_drop_down
                 </span>
             </div>
             <div class="list-sort">
-                <p data-sort="1">최근순</p>
-                <p data-sort="2">지난순</p>
+                <p data-sort="1">등록순</p>
                 <p data-sort="3">중요순</p>
                 <p data-sort="4">목표일순</p>
+                <!-- <p data-sort="2">지난순</p> -->
             </div>
             <div id="completeDelete" class="options delete-opt">
                 <span>완료 항목 삭제</span>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div id="content"></div>
+        <div id="content" style="margin-top:15px"></div>
         <div style="display: flex; justify-content: center;padding: 20px;">
             <button onclick="handleNoti('notification 확인용입니다', 1)"
                 style="padding:10px; border:0;background-color: transparent;">NotiTest</button>
@@ -117,6 +117,7 @@
     <div class="modal-transparent"></div>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="./js/index.js"></script>
     <script src="./js/general.js"></script>
     <script src="./js/selectOne.js"></script>

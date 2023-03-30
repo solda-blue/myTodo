@@ -70,12 +70,17 @@ async function handleSelectOneTodo(no) {
         } else {
             makeDay(31);
         }
+        // 목표일 삭제 버튼 & 메소드
         let width =  btnGoal.clientWidth;
         btnGoalDelete.style.left = `${width-11}px`;
         // 목표일 유무를 확인하여서 삭제버튼 띄울지 말지 표시
         if(btnGoal.innerText.includes('없음')) {
             btnGoalDelete.classList.add('disabled');
-        } else {
+        // chk == 1 일때만 보여주기
+        } else if(data.result.chk != 1) {
+            btnGoalDelete.classList.add('disabled');
+        }
+        else {
             btnGoalDelete.classList.remove('disabled');
         }
     }
@@ -230,6 +235,13 @@ async function handleUpdateDay(day) {
         handleSelectOneTodo(todoNo.dataset.no);
         goalOptionList.classList.remove('daybox-option-on');
         dayList.classList.remove('day-option-on');
+        let tag = document.querySelector(`.todo-list[data-no='${todoNo.dataset.no}']`);
+        // 여기서 말하는 태그는 todolist 그 자체를 말한다 
+        if(tag.childElementCount > 4) {
+            tag.lastElementChild.remove();
+            console.log('태그 삭제함')
+        }
+        makeDayTag(data.result, tag);
     }
 }
 // 목표일 삭제

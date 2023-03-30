@@ -173,6 +173,7 @@ function handleTodoIn(data) {
         delay += 80;
         setTimeout(async () => {
             let frame = makeTodoFrame();
+            frame.setAttribute('data-no', data.result[i]._id);
             for(let j = 0; j < 4; j++) {
                 frame.children[j].setAttribute('data-no', data.result[i]._id);
             };
@@ -194,10 +195,43 @@ function handleTodoIn(data) {
                 frame.children[2].style = 'background-color:#63bfac;color:#f9f7e8';
                 frame.children[3].style = 'filter: invert(93%) sepia(19%) saturate(313%) hue-rotate(342deg) brightness(111%) contrast(95%);'
             };
+            // 목표일 알려주는 태그
+            makeDayTag(data.result[i], frame);
             main.appendChild(frame);
         }, delay);
     }
 };
+
+// 목표일 알림 태그 만들기 (응답 받아온 데이터, 태그가 들어갈 html 요소, 반복문 i)
+function makeDayTag(result, el) {
+    // 목표일 비교를 위한 오늘 날자 가져오기
+    let today = Number(checkToday().split('-').join(''));
+    if(result.day !== '없음' && result.chk == 1) {
+        let goal = Number(result.day.split('-').join(''));
+        let alert = document.createElement('div');
+        if(today === goal) {
+            alert.classList.add('alert-goal');
+            alert.classList.add('alert-today');
+            alert.innerText = 'today!';
+            // el.appendChild(alert);
+        } else if (today > goal) {
+            // let alert = document.createElement('div');
+            alert.classList.add('alert-goal');
+            alert.classList.add('alert-late');
+            alert.innerText = 'late';
+            // el.appendChild(alert);
+        } else {
+            // let alert = document.createElement('div');
+            let date = result.day.slice(5);
+            alert.classList.add('alert-goal');
+            alert.classList.add('alert-someday');
+            alert.innerText = date;
+            // el.appendChild(alert);
+        }
+        el.appendChild(alert);
+    };
+
+}
 
 // todo-list 형식만 따로 
 function makeTodoFrame() {

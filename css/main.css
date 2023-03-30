@@ -137,3 +137,26 @@ input[type="checkbox"]:checked {
     100% { right: -500px; opacity: 0; }
 }
 
+.alert-goal {
+    position: absolute;
+    right: 7px;
+    top: -12px;
+    font-size: 13px;
+    display : flex;
+    justify-content : center;
+    align-items: center;
+    padding: 2px 5px 1px;
+    box-shadow: var(--shadow);
+    border-radius: 4px;
+    color: white;
+    cursor: default;
+}
+.alert-today {
+    background-color: var(--color-point1);
+}
+.alert-late {
+    background-color: var(--color-placeholder);
+}
+.alert-someday {
+    background-color: var(--color-main);
+}

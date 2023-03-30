@@ -43,10 +43,13 @@ function handleDate() {
     // dayBox.appendChild(showTime);
     clock.appendChild(showWeek);
     clock.appendChild(dayBox);
-
-
     // clock.appendChild(showTime);
 };
+
+function checkToday() {
+    let today = moment().format('YYYY-MM-DD');
+    return today;
+}
 
 // FIXME: 이거 나중에 공부하고 바꿔야 할 듯
 // 정렬 버튼 => 모달창
