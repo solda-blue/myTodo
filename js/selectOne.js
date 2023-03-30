@@ -14,6 +14,8 @@ const btnDay = document.getElementById('btnDay');
 const monthList = document.querySelector('.month-option');
 const dayList = document.querySelector('.day-option');
 const dayBox = document.querySelector('.day-box');
+// 목표일 삭제버튼
+const btnGoalDelete = document.getElementById('btnGoalDelete');
 // 메모
 const memo = document.getElementById('memo');
 
@@ -67,6 +69,14 @@ async function handleSelectOneTodo(no) {
             makeDay(child);
         } else {
             makeDay(31);
+        }
+        let width =  btnGoal.clientWidth;
+        btnGoalDelete.style.left = `${width-11}px`;
+        // 목표일 유무를 확인하여서 삭제버튼 띄울지 말지 표시
+        if(btnGoal.innerText.includes('없음')) {
+            btnGoalDelete.classList.add('disabled');
+        } else {
+            btnGoalDelete.classList.remove('disabled');
         }
     }
 }
@@ -126,6 +136,7 @@ btnDelete.addEventListener('click', async function() {
             }
             handleNoti('삭제되었습니다');
             closeModal();
+            handleCount();
         }
     }
 })
@@ -182,6 +193,7 @@ monthList.addEventListener('click', async function(e) {
                 }
             }
             monthList.classList.remove('month-option-on');
+            handleSelectOneTodo(todoNo.dataset.no);
         }
     }
 });
@@ -215,9 +227,26 @@ async function handleUpdateDay(day) {
         console.log(data.result);
         renderDay(data.result.day);
         dayList.classList.remove('day-option-on');
+        handleSelectOneTodo(todoNo.dataset.no);
+        goalOptionList.classList.remove('daybox-option-on');
+        dayList.classList.remove('day-option-on');
+    }
+}
+// 목표일 삭제
+btnGoalDelete.addEventListener('click', handleDeleteDay);
+async function handleDeleteDay() {
+    let no = todoNo.dataset.no;
+    const url = `http://127.0.0.1:8088/todo/deleteday.json`;
+    const body = { no : no };
+    const headers = { "Content-Type":"application/json" };
+    const { data } = await axios.put(url, body, {headers});
+    if(data.status === 200) {
+        console.log(data.result);
+        handleSelectOneTodo(no);
     }
 }
 
+// FIXME: 여기부분 간략하게
 btnMonth.addEventListener('mouseover', function() {
     if(todoNo.dataset.chk === '1') {
         monthList.classList.add('month-option-on');
@@ -260,6 +289,13 @@ btnDay.addEventListener('mouseleave', function() {
     }
 });
 
+// 삭제버튼 hover시에도 goal 버튼 하이라이트 적용
+btnGoalDelete.addEventListener('mouseover', function() {
+    btnGoal.classList.add('days-btn-on');
+});
+btnGoalDelete.addEventListener('mouseleave', function() {
+    btnGoal.classList.remove('days-btn-on');
+});
 
 // 목표일 옵션 토글
 btnGoal.addEventListener('click', function() {
