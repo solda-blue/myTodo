@@ -18,7 +18,7 @@ const dayBox = document.querySelector('.day-box');
 const btnGoalDelete = document.getElementById('btnGoalDelete');
 // 메모
 const memo = document.getElementById('memo');
-
+// 꼼수용 변수
 let cheat = false;
 
 // 월에 따라서 일수 조정
@@ -198,6 +198,12 @@ monthList.addEventListener('click', async function(e) {
                 } else {
                     renderDay(data.result.day);
                 }
+                let tag = document.querySelector(`.todo-list[data-no='${todoNo.dataset.no}']`);
+                if(tag.childElementCount > 4) {
+                    tag.lastElementChild.remove();
+                    console.log('태그 삭제함')
+                }
+                makeDayTag(data.result, tag);
             }
             monthList.classList.remove('month-option-on');
             handleSelectOneTodo(todoNo.dataset.no);
@@ -231,14 +237,14 @@ async function handleUpdateDay(day) {
     };
     const { data } = await axios.put(url, body, {headers});
     if(data.status === 200) {
+        // 여기서 말하는 태그는 todolist 그 자체를 말한다 
+        let tag = document.querySelector(`.todo-list[data-no='${todoNo.dataset.no}']`);
         dayList.classList.remove('day-option-on');
         cheat = true;
         console.log(data.result);
         renderDay(data.result.day);
         handleSelectOneTodo(todoNo.dataset.no);
-        goalOptionList.classList.remove('daybox-option-on');
-        let tag = document.querySelector(`.todo-list[data-no='${todoNo.dataset.no}']`);
-        // 여기서 말하는 태그는 todolist 그 자체를 말한다 
+    goalOptionList.classList.remove('daybox-option-on');
         if(tag.childElementCount > 4) {
             tag.lastElementChild.remove();
             console.log('태그 삭제함')
@@ -246,7 +252,10 @@ async function handleUpdateDay(day) {
         btnGoal.classList.remove('days-btn-on');
         // FIXME: 날짜 div 안보이게 해야함 => 일단 편법으로 해결 
         makeDayTag(data.result, tag);
-        setTimeout(() => cheat = false, 300);
+        setTimeout(() => {
+            cheat = false
+            newDay = false;
+        }, 300);
     }
 }
 // 목표일 삭제

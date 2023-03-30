@@ -204,6 +204,7 @@ function handleTodoIn(data) {
 
 // 목표일 알림 태그 만들기 (응답 받아온 데이터, 태그가 들어갈 html 요소, 반복문 i)
 function makeDayTag(result, el) {
+    // FIXME: 몇번 더 테스트 해보고 버그 안나면 주석 잡아놓은 것들 삭제
     // 목표일 비교를 위한 오늘 날자 가져오기
     let today = Number(checkToday().split('-').join(''));
     if(result.day !== '없음' && result.chk == 1) {
@@ -371,6 +372,7 @@ const handleInsert = async () => {
             // list가 todo 일때만 화면에 추가
             if(listNow === 1) {
                 let frame = makeTodoFrame();
+                frame.setAttribute('data-no', data.result._id);
                 for(let i = 0; i < 4; i++) {
                     frame.children[i].setAttribute('data-no', data.result._id);
                 };

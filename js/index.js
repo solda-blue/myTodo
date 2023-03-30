@@ -8,7 +8,7 @@ const modalTransparent = document.querySelector('.modal-transparent');
 let select = 1;
 
 handleDate();
-setInterval(handleDate, 1000);
+// setInterval(handleDate, 1000*60);
 
 // 시계
 function handleDate() {
@@ -136,4 +136,8 @@ function handleNoti(text, type) {
 // 생성한 notiBox 삭제
 function deleteNoti(el) {
     el.remove();
+}
+
+function modalConfirm() {
+    
 }
