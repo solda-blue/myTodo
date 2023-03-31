@@ -16,14 +16,14 @@ handleDate();
 // setInterval(handleDate, 1000*60);
 
 // 로고 장난
-document.addEventListener('scroll', function() {
-    let scroll = document.documentElement.scrollTop;
-    if(scroll > 97) {
-        clock.style.opacity = 0;
-    } else {
-        clock.style.opacity = 1;
-    }
-})
+// document.addEventListener('scroll', function() {
+//     let scroll = document.documentElement.scrollTop;
+//     if(scroll > 97) {
+//         clock.style.opacity = 0;
+//     } else {
+//         clock.style.opacity = 1;
+//     }
+// })
 
 
 // 시계
