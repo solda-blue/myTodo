@@ -10,15 +10,17 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'YanoljaYacheR';
 }
 body {
     /* x를 hidden을 주면 강제로 여백을 없앨 수 있다 */
-    /* overflow-x: hidden; */
+    overflow-x: hidden;
     overflow-y: auto;
 }
 .container {
     background: var(--color-background);
-    min-width: 620px;
+    /* min-width: 612px; */
+    min-width: 512px;
 }
 .input-box {
     width: 100%;
@@ -39,7 +41,8 @@ body {
     color: var(--color-text);
     background-color: white;
     height: 50px;
-    width: 500px;
+    /* width: 500px; */
+    width: 400px;
     padding-left: 47px;
     margin-right: 20px;
     border: 0;
@@ -73,6 +76,8 @@ input::placeholder {
     display: flex;
     justify-content: right;
     color: var(--color-main);
+    /* 재미로 잠깐 넣은거 */
+    position: fixed;
 }
 .week {
     font-size: 42px;
@@ -129,7 +134,8 @@ input::placeholder {
     display: flex;
     margin: 0 auto;
     margin-bottom: 5px;
-    width: 575px;
+    /* width: 575px; */
+    width: 505px;
     justify-content: right;
     color: var(--color-main);
     position: relative;
@@ -137,7 +143,7 @@ input::placeholder {
 .options {
     display: none;
     border-radius: 4px;
-    padding: 3px 5px 5px 10px;
+    padding: 2px 5px 5px 10px;
 }
 .options:hover {
     color: white;

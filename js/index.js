@@ -4,11 +4,27 @@ const btnSort = document.getElementById('countSort');
 const listSort = document.querySelector('.list-sort');
 const btnCompleteDelete = document.getElementById('completeDelete');
 const modalTransparent = document.querySelector('.modal-transparent');
+// 삭제 다이얼로그 모달
+const modalConfirm = document.getElementById('modalConfirm');
+const btnBoxDelete = document.querySelector('.box-confirm');
+const dialogueDelete = document.querySelector('.delete-dialogue');
 
+// 정렬용 변수
 let select = 1;
 
 handleDate();
 // setInterval(handleDate, 1000*60);
+
+// 로고 장난
+document.addEventListener('scroll', function() {
+    let scroll = document.documentElement.scrollTop;
+    if(scroll > 97) {
+        clock.style.opacity = 0;
+    } else {
+        clock.style.opacity = 1;
+    }
+})
+
 
 // 시계
 function handleDate() {
@@ -87,23 +103,39 @@ listSort.addEventListener('click', function(e) {
 
 
 // 완료 항목 전체삭제
-async function DeleteAllCompleted() {
+function DeleteAllCompleted() {
     if(document.querySelector('.main').childElementCount > 0) {
-        if(confirm('삭제하시겠습니까?')) {
-            const url = `http://127.0.0.1:8088/todo/deleteall.json`;
-            const body = {};
-            const headers = {
-                "Content-Type" : "application/json"
-            };
-            const { data } = await axios.post(url, body, {headers});
-            if(data.status === 200) {
-                handleCompleteData();
-                handleCount();
-                handleNoti('삭제되었습니다');
+        modalConfirm.style.display = 'flex';
+        dialogueDelete.classList.add('delete-dialogue-on');
+        btnBoxDelete.addEventListener('click', (e) => {
+            if(e.target !== e.currentTarget) {
+                if(e.target.classList.contains('cancer')) {
+                    console.log(false);
+                } else {
+                    console.log(true);
+                    requestDeleteAllCompleted();
+                }
             }
-        }
+            modalConfirm.style.display = 'none';
+            dialogueDelete.classList.remove('delete-dialogue-on');
+        }, {once : true});
     } else {
         handleNoti('삭제할 항목이 없습니다', 1);
+    }
+}
+
+// 완료항목 전체 삭제 ajax
+async function requestDeleteAllCompleted() {
+    const url = `http://127.0.0.1:8088/todo/deleteall.json`;
+    const body = {};
+    const headers = {
+        "Content-Type" : "application/json"
+    };
+    const { data } = await axios.post(url, body, {headers});
+    if(data.status === 200) {
+        handleCompleteData();
+        handleCount();
+        handleNoti('삭제되었습니다');
     }
 }
 
@@ -115,7 +147,8 @@ function handleNoti(text, type) {
     }
     const types = [
         {type : 'success', icon : '/assets/svg/success.svg'},
-        {type : 'error', icon : '/assets/svg/error.svg'},
+        {type : 'error',   icon : '/assets/svg/error.svg'},
+        {type : 'info',    icon : '/assets/svg/info.svg'},
     ]
     
     let notiBox = document.createElement('div');
@@ -138,6 +171,19 @@ function deleteNoti(el) {
     el.remove();
 }
 
-function modalConfirm() {
-    
+function handleDeleteTodo() {
+    btnBoxDelete.addEventListener('click', (e) => {
+        if(e.target !== e.currentTarget) {
+            if(e.target.classList.contains('cancer')) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }, {once : true})
 }
+
+// btnBoxDelete.addEventListener('click', function(e) {
+//     console.log(e.target)
+    
+// })

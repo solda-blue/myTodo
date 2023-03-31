@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="./css/general.css" />
     <link rel="stylesheet" href="./css/selectOne.css" />
+    <link rel="stylesheet" href="./css/refereneces.css" />
     <title>My Todo</title>
 </head>
 <body>
@@ -16,13 +17,13 @@
         </div>
         <div class="input-box">
                 <span class="material-symbols-outlined icon-write">edit_square</span>
-                <input id="todo" class="input" type="text"
+                <input id="todo" class="input" type="text" spellcheck="false"
                     placeholder="Enter your next Todo" autofocus maxlength="50" />
         </div>
         <div id="countBox">
             <div class="tab-border"></div>
             <div id="count" class="btn-count on">todo</div>
-            <div style="width: 20px;background-color: #f9f7e8;"></div>
+            <div style="width: 20px;background-color: transparent;"></div>
             <div id="complete" class="btn-count">completed</div>
         </div>
         <div id="option-box">
@@ -60,14 +61,16 @@
             <div style="margin-bottom: 5px;">
                 <h3 id="title">title</h3>
             </div>
+            <!-- hr -->
             <div class="horizontal-box">
                 <div class="horizontal"></div>
             </div>
-            <div id="memo" contenteditable="true" placeholder="memo"></div>
+            <div id="memo" spellcheck="false" contenteditable="true" placeholder="&nbsp;memo"></div>
 
-            <div class="horizontal-box">
+            <!-- hr -->
+            <!-- <div class="horizontal-box">
                 <div class="horizontal"></div>
-            </div>
+            </div> -->
 
             <!-- 우선순위, 목표시간 옵션 사항들 -->
             <div class="detail">
@@ -115,12 +118,13 @@
     </div>
 
     <div class="modal-transparent"></div>
-    <div class="modal-confirm">
+    <!-- 삭제 다이얼로그 -->
+    <div id="modalConfirm" class="modal-confirm">
         <div class="delete-dialogue">
-            <p>삭제하시겠습니까?</p>
+            <p>삭제 하시겠습니까?</p>
             <div class="box-confirm">
-                <button>취소</button>
-                <button>삭제</button>
+                <button class="btn-dialogue cancer">취소</button>
+                <button class="btn-dialogue delete">삭제</button>
             </div>
         </div>
     </div>

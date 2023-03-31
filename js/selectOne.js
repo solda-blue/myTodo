@@ -124,8 +124,25 @@ function renderDay(val) {
 // todo 삭제 이벤트
 btnDelete.addEventListener('click', async function() {
     // TODO: dialogue 창도 되면 만들자
-    if(confirm('삭제하시겠습니까?')) {
-        let no = todoNo.dataset.no;
+    modalConfirm.style.display = 'flex';
+    dialogueDelete.classList.add('delete-dialogue-on');
+    btnBoxDelete.addEventListener('click', (e) => {
+        if(e.target !== e.currentTarget) {
+            if(e.target.classList.contains('cancer')) {
+                console.log(false);
+            } else {
+                console.log(true);
+                deleteTodo();
+            }
+        }
+        modalConfirm.style.display = 'none';
+        dialogueDelete.classList.remove('delete-dialogue-on');
+    }, {once : true});
+});
+
+// todo 한개 삭제 ajax
+async function deleteTodo() {
+    let no = todoNo.dataset.no;
         let chk = todoNo.dataset.chk;
         const url = `http://127.0.0.1:8088/todo/delete.json`;
         const body = {
@@ -145,8 +162,7 @@ btnDelete.addEventListener('click', async function() {
             closeModal();
             handleCount();
         }
-    }
-})
+}
 
 // 모달창 끄기
 modal.addEventListener('click', function(e) {

@@ -81,7 +81,8 @@ input[type="checkbox"]:checked {
 /* 해당 todo박스호버시 아이콘이 보임 */
 .todo-list:hover .info {
     position: absolute;
-    left: 566px;
+    /* left: 566px; */
+    left: 466px;
     display: block;
     filter: invert(68%) sepia(7%) saturate(2125%) hue-rotate(118deg) brightness(99%) contrast(89%);
     /* 파란색 필터 #3399ff*/
@@ -145,7 +146,7 @@ input[type="checkbox"]:checked {
     display : flex;
     justify-content : center;
     align-items: center;
-    padding: 2px 5px 1px;
+    padding: 1px 5px;
     box-shadow: var(--shadow);
     border-radius: 4px;
     color: white;

@@ -54,12 +54,12 @@
     }
 }
 #title {
-    /* text-shadow: 0px 1px 2px black; */
+    padding-left: 7px;
 }
 /* memo div에 placeholder 만들기 */
 [contenteditable=true]:empty:before{
     content: attr(placeholder);
-    color: var(--color-placeholder);
+    color: var(--color-main);
     display: block; /* For Firefox */
 }
 #memo {
@@ -108,7 +108,7 @@
 .important-box {
     width: 105px;
     display: flex;
-    justify-content: right;
+    justify-content: left;
     position: relative;
     margin-top: 7px;
 }
@@ -339,27 +339,67 @@
     z-index: 5;
 }
 
+/* 삭제 다이얼로그 */
 .modal-confirm {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     top: 0;
-    backdrop-filter: blur(3.5px);
+    backdrop-filter: blur(2px);
     background-color: rgba(0, 0, 0, 0.15);
     display: none;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     z-index: 5;
 }
 .delete-dialogue {
-    /* position: absolute; */
-    width: 200px;
-    height: 50px;
-    padding: 1.5rem;
+    position: fixed;
+    top: 0px;
+    width: 300px;
+    height: 60px;
+    padding: 20px;
     background-color: var(--color-background);
-    backdrop-filter: blur(3.5px);
     box-shadow: var(--shadow);
-    border-radius: 12px;
+    border-radius: 8px;
     z-index: 21;
-    /* top: 22.5%; */
+    color: var(--color-text);
+    transform: translateY(30px);
+    animation: deleteslidedown 0.4s ease-in-out;
+}
+@keyframes deleteslidedown {
+    from {
+        transform: translateY(-120px);
+    }
+    to {
+        transform: translateY(30px);
+    }
+}
+
+.box-confirm {
+    display: flex;
+    justify-content: right;
+    margin-top: 5px;
+}
+.btn-dialogue {
+    width: 60px;
+    height: 30px;
+    border: 0;
+    margin: 5px;
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+}
+.btn-dialogue:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+.btn-dialogue:active {
+    transform: translateY(3px);
+}
+.btn-dialogue.cancer {
+    background-color: white;
+    color: var(--color-main);
+}
+.btn-dialogue.delete {
+    background-color: var(--color-main);
+    color: white;
 }

@@ -249,6 +249,7 @@ function makeTodoFrame() {
     important.classList.add('important');
     todos.classList.add('input', 'todos');
     todos.setAttribute('maxlength', 50);
+    todos.setAttribute('spellcheck', false);
     info.classList.add('info');
     info.setAttribute('src', '/assets/svg/info.svg');
     // div 안에 태그 넣기
